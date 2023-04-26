@@ -1,0 +1,612 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4901077C29F9C32100A6CB20 /* SpeckApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4901077B29F9C32100A6CB20 /* SpeckApp.swift */; };
+		4901077E29F9C32100A6CB20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4901077D29F9C32100A6CB20 /* ContentView.swift */; };
+		4901078029F9C32200A6CB20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4901077F29F9C32200A6CB20 /* Assets.xcassets */; };
+		4901078329F9C32200A6CB20 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4901078229F9C32200A6CB20 /* Preview Assets.xcassets */; };
+		4901078E29F9C32200A6CB20 /* SpeckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4901078D29F9C32200A6CB20 /* SpeckTests.swift */; };
+		4901079829F9C32200A6CB20 /* SpeckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4901079729F9C32200A6CB20 /* SpeckUITests.swift */; };
+		4901079A29F9C32200A6CB20 /* SpeckUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4901079929F9C32200A6CB20 /* SpeckUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4901078A29F9C32200A6CB20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4901077029F9C32100A6CB20 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4901077729F9C32100A6CB20;
+			remoteInfo = Speck;
+		};
+		4901079429F9C32200A6CB20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4901077029F9C32100A6CB20 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4901077729F9C32100A6CB20;
+			remoteInfo = Speck;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4901077829F9C32100A6CB20 /* Speck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Speck.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4901077B29F9C32100A6CB20 /* SpeckApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeckApp.swift; sourceTree = "<group>"; };
+		4901077D29F9C32100A6CB20 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4901077F29F9C32200A6CB20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4901078229F9C32200A6CB20 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4901078429F9C32200A6CB20 /* Speck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Speck.entitlements; sourceTree = "<group>"; };
+		4901078929F9C32200A6CB20 /* SpeckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4901078D29F9C32200A6CB20 /* SpeckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeckTests.swift; sourceTree = "<group>"; };
+		4901079329F9C32200A6CB20 /* SpeckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeckUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4901079729F9C32200A6CB20 /* SpeckUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeckUITests.swift; sourceTree = "<group>"; };
+		4901079929F9C32200A6CB20 /* SpeckUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeckUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		490107A729F9C5AE00A6CB20 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
+		490107A929F9C95300A6CB20 /* libspeck.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libspeck.a; path = ../target/debug/libspeck.a; sourceTree = "<group>"; };
+		490107AB29F9CA8E00A6CB20 /* Generated */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Generated; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4901077529F9C32100A6CB20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4901078629F9C32200A6CB20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4901079029F9C32200A6CB20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4901076F29F9C32100A6CB20 = {
+			isa = PBXGroup;
+			children = (
+				490107AB29F9CA8E00A6CB20 /* Generated */,
+				490107A729F9C5AE00A6CB20 /* BridgingHeader.h */,
+				4901077A29F9C32100A6CB20 /* Speck */,
+				4901078C29F9C32200A6CB20 /* SpeckTests */,
+				4901079629F9C32200A6CB20 /* SpeckUITests */,
+				4901077929F9C32100A6CB20 /* Products */,
+				490107A829F9C95300A6CB20 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4901077929F9C32100A6CB20 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4901077829F9C32100A6CB20 /* Speck.app */,
+				4901078929F9C32200A6CB20 /* SpeckTests.xctest */,
+				4901079329F9C32200A6CB20 /* SpeckUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4901077A29F9C32100A6CB20 /* Speck */ = {
+			isa = PBXGroup;
+			children = (
+				4901077B29F9C32100A6CB20 /* SpeckApp.swift */,
+				4901077D29F9C32100A6CB20 /* ContentView.swift */,
+				4901077F29F9C32200A6CB20 /* Assets.xcassets */,
+				4901078429F9C32200A6CB20 /* Speck.entitlements */,
+				4901078129F9C32200A6CB20 /* Preview Content */,
+			);
+			path = Speck;
+			sourceTree = "<group>";
+		};
+		4901078129F9C32200A6CB20 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				4901078229F9C32200A6CB20 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4901078C29F9C32200A6CB20 /* SpeckTests */ = {
+			isa = PBXGroup;
+			children = (
+				4901078D29F9C32200A6CB20 /* SpeckTests.swift */,
+			);
+			path = SpeckTests;
+			sourceTree = "<group>";
+		};
+		4901079629F9C32200A6CB20 /* SpeckUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4901079729F9C32200A6CB20 /* SpeckUITests.swift */,
+				4901079929F9C32200A6CB20 /* SpeckUITestsLaunchTests.swift */,
+			);
+			path = SpeckUITests;
+			sourceTree = "<group>";
+		};
+		490107A829F9C95300A6CB20 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				490107A929F9C95300A6CB20 /* libspeck.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4901077729F9C32100A6CB20 /* Speck */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4901079D29F9C32200A6CB20 /* Build configuration list for PBXNativeTarget "Speck" */;
+			buildPhases = (
+				490107A629F9C51800A6CB20 /* ShellScript */,
+				4901077429F9C32100A6CB20 /* Sources */,
+				4901077529F9C32100A6CB20 /* Frameworks */,
+				4901077629F9C32100A6CB20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Speck;
+			productName = Speck;
+			productReference = 4901077829F9C32100A6CB20 /* Speck.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4901078829F9C32200A6CB20 /* SpeckTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 490107A029F9C32200A6CB20 /* Build configuration list for PBXNativeTarget "SpeckTests" */;
+			buildPhases = (
+				4901078529F9C32200A6CB20 /* Sources */,
+				4901078629F9C32200A6CB20 /* Frameworks */,
+				4901078729F9C32200A6CB20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4901078B29F9C32200A6CB20 /* PBXTargetDependency */,
+			);
+			name = SpeckTests;
+			productName = SpeckTests;
+			productReference = 4901078929F9C32200A6CB20 /* SpeckTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4901079229F9C32200A6CB20 /* SpeckUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 490107A329F9C32200A6CB20 /* Build configuration list for PBXNativeTarget "SpeckUITests" */;
+			buildPhases = (
+				4901078F29F9C32200A6CB20 /* Sources */,
+				4901079029F9C32200A6CB20 /* Frameworks */,
+				4901079129F9C32200A6CB20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4901079529F9C32200A6CB20 /* PBXTargetDependency */,
+			);
+			name = SpeckUITests;
+			productName = SpeckUITests;
+			productReference = 4901079329F9C32200A6CB20 /* SpeckUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4901077029F9C32100A6CB20 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					4901077729F9C32100A6CB20 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					4901078829F9C32200A6CB20 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 4901077729F9C32100A6CB20;
+					};
+					4901079229F9C32200A6CB20 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 4901077729F9C32100A6CB20;
+					};
+				};
+			};
+			buildConfigurationList = 4901077329F9C32100A6CB20 /* Build configuration list for PBXProject "Speck" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4901076F29F9C32100A6CB20;
+			productRefGroup = 4901077929F9C32100A6CB20 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4901077729F9C32100A6CB20 /* Speck */,
+				4901078829F9C32200A6CB20 /* SpeckTests */,
+				4901079229F9C32200A6CB20 /* SpeckUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4901077629F9C32100A6CB20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4901078329F9C32200A6CB20 /* Preview Assets.xcassets in Resources */,
+				4901078029F9C32200A6CB20 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4901078729F9C32200A6CB20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4901079129F9C32200A6CB20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		490107A629F9C51800A6CB20 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./xcode-build-rust.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4901077429F9C32100A6CB20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4901077E29F9C32100A6CB20 /* ContentView.swift in Sources */,
+				4901077C29F9C32100A6CB20 /* SpeckApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4901078529F9C32200A6CB20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4901078E29F9C32200A6CB20 /* SpeckTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4901078F29F9C32200A6CB20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4901079829F9C32200A6CB20 /* SpeckUITests.swift in Sources */,
+				4901079A29F9C32200A6CB20 /* SpeckUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4901078B29F9C32200A6CB20 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4901077729F9C32100A6CB20 /* Speck */;
+			targetProxy = 4901078A29F9C32200A6CB20 /* PBXContainerItemProxy */;
+		};
+		4901079529F9C32200A6CB20 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4901077729F9C32100A6CB20 /* Speck */;
+			targetProxy = 4901079429F9C32200A6CB20 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4901079B29F9C32200A6CB20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4901079C29F9C32200A6CB20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		4901079E29F9C32200A6CB20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Speck/Speck.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Speck/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)/../target/debug";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jari.Speck;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/BridgingHeader.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4901079F29F9C32200A6CB20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Speck/Speck.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Speck/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=*]" = "$(PROJECT_DIR)/../target/release";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jari.Speck;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/BridgingHeader.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		490107A129F9C32200A6CB20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jari.SpeckTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Speck.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Speck";
+			};
+			name = Debug;
+		};
+		490107A229F9C32200A6CB20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jari.SpeckTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Speck.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Speck";
+			};
+			name = Release;
+		};
+		490107A429F9C32200A6CB20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jari.SpeckUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Speck;
+			};
+			name = Debug;
+		};
+		490107A529F9C32200A6CB20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.jari.SpeckUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Speck;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4901077329F9C32100A6CB20 /* Build configuration list for PBXProject "Speck" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4901079B29F9C32200A6CB20 /* Debug */,
+				4901079C29F9C32200A6CB20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4901079D29F9C32200A6CB20 /* Build configuration list for PBXNativeTarget "Speck" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4901079E29F9C32200A6CB20 /* Debug */,
+				4901079F29F9C32200A6CB20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		490107A029F9C32200A6CB20 /* Build configuration list for PBXNativeTarget "SpeckTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				490107A129F9C32200A6CB20 /* Debug */,
+				490107A229F9C32200A6CB20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		490107A329F9C32200A6CB20 /* Build configuration list for PBXNativeTarget "SpeckUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				490107A429F9C32200A6CB20 /* Debug */,
+				490107A529F9C32200A6CB20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4901077029F9C32100A6CB20 /* Project object */;
+}
