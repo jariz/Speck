@@ -8,12 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var rustApp: RustAppWrapper
+    
+    func start () {
+        Task {
+            await rustApp.rust.start(username, password)
+        }
+    }
+    @State private var username: String = ""
+    @State private var password: String = ""
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            TextField(
+                "User name",
+                text: $username
+            )
+            SecureField(
+                "Password",
+                text: $password
+            )
+            Button(action: start) {
+                Text("Login")
+            }
+
         }
         .padding()
     }
