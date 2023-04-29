@@ -20,6 +20,7 @@
 		490107C529F9E3FC00A6CB20 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490107C429F9E3FB00A6CB20 /* AudioUnit.framework */; };
 		490107C729F9E40500A6CB20 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490107C629F9E40500A6CB20 /* CoreAudio.framework */; };
 		490107C929F9E40F00A6CB20 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490107C829F9E40F00A6CB20 /* AudioToolbox.framework */; };
+		490107CB29FC035F00A6CB20 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490107CA29FC035E00A6CB20 /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		490107C429F9E3FB00A6CB20 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		490107C629F9E40500A6CB20 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		490107C829F9E40F00A6CB20 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		490107CA29FC035E00A6CB20 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				4901077F29F9C32200A6CB20 /* Assets.xcassets */,
 				4901078429F9C32200A6CB20 /* Speck.entitlements */,
 				4901078129F9C32200A6CB20 /* Preview Content */,
+				490107CA29FC035E00A6CB20 /* LoginView.swift */,
 			);
 			path = Speck;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				490107C329F9DCCB00A6CB20 /* speck.swift in Sources */,
 				490107C029F9DCAF00A6CB20 /* SwiftBridgeCore.swift in Sources */,
 				4901077E29F9C32100A6CB20 /* ContentView.swift in Sources */,
+				490107CB29FC035F00A6CB20 /* LoginView.swift in Sources */,
 				4901077C29F9C32100A6CB20 /* SpeckApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
