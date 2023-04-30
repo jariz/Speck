@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "5D360EF2-E518-4360-B3CB-C5D1467735F3"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DFE0EDBA-FAE1-42DC-A6A4-561DA508F547"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/LoginView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "login()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A4FC7275-28B1-48A1-B3A0-19D9F55A52A5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "998365E0-334D-4483-8065-2B04E98ADAB1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "998365E0-334D-4483-8065-2B04E98ADAB1 - d378ab9a1d3fb73b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "236">
+               </Location>
+               <Location
+                  uuid = "998365E0-334D-4483-8065-2B04E98ADAB1 - b42d3bd380d2f2c0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "998365E0-334D-4483-8065-2B04E98ADAB1 - e6f90c0df766f325"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "020B957A-7806-4012-8804-2C318EF28DB0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4AAE8013-B4DA-4882-B9A3-EA12365991BC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "4AAE8013-B4DA-4882-B9A3-EA12365991BC - e6f90c0df766f3fb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "328">
+               </Location>
+               <Location
+                  uuid = "4AAE8013-B4DA-4882-B9A3-EA12365991BC - 4da6dc3ddfd2315f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Combine.Subscribers.Completion&lt;Swift.Error&gt;) -&gt; () in closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "4AAE8013-B4DA-4882-B9A3-EA12365991BC - 4da6dc3ddfd2313c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Combine.Subscribers.Completion&lt;Swift.Error&gt;) -&gt; () in closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F3995DA4-679D-4350-AAF3-AD33D548E587"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "F3995DA4-679D-4350-AAF3-AD33D548E587 - ae8d081453a38cf7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (SpotifyWebAPI.SearchResult) -&gt; () in closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "196">
+               </Location>
+               <Location
+                  uuid = "F3995DA4-679D-4350-AAF3-AD33D548E587 - 4da6dc3ddfd23099"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Combine.Subscribers.Completion&lt;Swift.Error&gt;) -&gt; () in closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "F3995DA4-679D-4350-AAF3-AD33D548E587 - 4da6dc3ddfd230db"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Combine.Subscribers.Completion&lt;Swift.Error&gt;) -&gt; () in closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "01A88D87-0F80-47BC-835C-7F0BF72606B8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "01A88D87-0F80-47BC-835C-7F0BF72606B8 - e6f90c0df766f23d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "868">
+               </Location>
+               <Location
+                  uuid = "01A88D87-0F80-47BC-835C-7F0BF72606B8 - ae8d081453a38cb5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (SpotifyWebAPI.SearchResult) -&gt; () in closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "196">
+               </Location>
+               <Location
+                  uuid = "01A88D87-0F80-47BC-835C-7F0BF72606B8 - ae8d081453a38c7b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (SpotifyWebAPI.SearchResult) -&gt; () in closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in Speck.ContentView.body.getter : some"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41"
+                  offsetFromSymbolStart = "196">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "65517BB1-2038-414C-9B4E-FA2E6EE00D2D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/SpeckAuthManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "SpeckAuthManager"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "65517BB1-2038-414C-9B4E-FA2E6EE00D2D - 6509d75f8c193210"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Speck.SpeckAuthManager._assertNotOnUpdateAuthInfoDispatchQueue() -&gt; ()"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/SpeckAuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  uuid = "65517BB1-2038-414C-9B4E-FA2E6EE00D2D - ee395a6458211dbd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Speck.SpeckAuthManager.refreshTokens(onlyIfExpired: Swift.Bool, tolerance: Swift.Double) -&gt; Combine.AnyPublisher&lt;(), Swift.Error&gt;"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/SpeckAuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "104"
+                  endingLineNumber = "104"
+                  offsetFromSymbolStart = "396">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9214BD6F-CEB8-4EA5-B860-5BEC708628BF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/SpeckAuthManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "refreshTokens(onlyIfExpired:tolerance:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9214BD6F-CEB8-4EA5-B860-5BEC708628BF - ee395a64582161f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Speck.SpeckAuthManager.refreshTokens(onlyIfExpired: Swift.Bool, tolerance: Swift.Double) -&gt; Combine.AnyPublisher&lt;(), Swift.Error&gt;"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/SpeckAuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "9214BD6F-CEB8-4EA5-B860-5BEC708628BF - ab78e3db0c525bee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 ((Swift.Result&lt;(), Swift.Error&gt;) -&gt; ()) -&gt; () in Speck.SpeckAuthManager.refreshTokens(onlyIfExpired: Swift.Bool, tolerance: Swift.Double) -&gt; Combine.AnyPublisher&lt;(), Swift.Error&gt;"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/SpeckAuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "204">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "82331C22-EA73-4627-A6E5-BB64605649D7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/Speck-grcgzdrfjjforqarrgdwqifikapi/SourcePackages/checkouts/SpotifyAPI/Sources/SpotifyWebAPI/API/SpotifyAPI+Search.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "search(query:categories:market:limit:offset:includeExternal:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6BD419FC-49D8-4013-B530-D1D5931746A5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/Speck-grcgzdrfjjforqarrgdwqifikapi/SourcePackages/checkouts/SpotifyAPI/Sources/SpotifyWebAPI/API/SpotifyAPI+Wrappers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "apiRequest(url:httpMethod:makeHeaders:bodyData:requiredScopes:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6D1539C6-C2EF-4477-80EF-FDD10E4FFA08"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/Speck-grcgzdrfjjforqarrgdwqifikapi/SourcePackages/checkouts/SpotifyAPI/Sources/SpotifyWebAPI/API/SpotifyAPI+Wrappers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "apiRequest(url:httpMethod:makeHeaders:bodyData:requiredScopes:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6F95CAD4-6728-42B7-878D-720D872F4A45"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/Speck-grcgzdrfjjforqarrgdwqifikapi/SourcePackages/checkouts/SpotifyAPI/Sources/SpotifyWebAPI/API/SpotifyAPI+Wrappers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "apiRequest(url:httpMethod:makeHeaders:bodyData:requiredScopes:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "583431DD-BEDC-4496-B669-A43C4CD4ACF1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/Speck-grcgzdrfjjforqarrgdwqifikapi/SourcePackages/checkouts/SpotifyAPI/Sources/SpotifyWebAPI/API/SpotifyAPI+Wrappers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "apiRequest(url:httpMethod:makeHeaders:bodyData:requiredScopes:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FEEE8F0F-F7CB-4939-8BAB-EE4773A064C4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/Speck-grcgzdrfjjforqarrgdwqifikapi/SourcePackages/checkouts/SpotifyAPI/Sources/SpotifyWebAPI/API/SpotifyAPI+Wrappers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "apiRequest(url:httpMethod:makeHeaders:bodyData:requiredScopes:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BA8E642D-216E-4ACE-B442-8710F74FFF77"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/Speck-grcgzdrfjjforqarrgdwqifikapi/SourcePackages/checkouts/SpotifyAPI/Sources/SpotifyWebAPI/API/SpotifyAPI+Wrappers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "apiRequest(url:httpMethod:makeHeaders:bodyData:requiredScopes:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

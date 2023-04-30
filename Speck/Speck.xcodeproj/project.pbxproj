@@ -21,6 +21,9 @@
 		490107C729F9E40500A6CB20 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490107C629F9E40500A6CB20 /* CoreAudio.framework */; };
 		490107C929F9E40F00A6CB20 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490107C829F9E40F00A6CB20 /* AudioToolbox.framework */; };
 		490107CB29FC035F00A6CB20 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490107CA29FC035E00A6CB20 /* LoginView.swift */; };
+		49B0B98929FD282300404FF4 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 49B0B98829FD282300404FF4 /* KeychainAccess */; };
+		49B0B98C29FD285A00404FF4 /* SpotifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 49B0B98B29FD285A00404FF4 /* SpotifyAPI */; };
+		49B0B98E29FD581500404FF4 /* SpeckAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B0B98D29FD581500404FF4 /* SpeckAuthManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +65,7 @@
 		490107C629F9E40500A6CB20 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		490107C829F9E40F00A6CB20 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		490107CA29FC035E00A6CB20 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		49B0B98D29FD581500404FF4 /* SpeckAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeckAuthManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 				490107AC29F9DA4700A6CB20 /* libspeck.a in Frameworks */,
 				490107C529F9E3FC00A6CB20 /* AudioUnit.framework in Frameworks */,
 				490107C929F9E40F00A6CB20 /* AudioToolbox.framework in Frameworks */,
+				49B0B98C29FD285A00404FF4 /* SpotifyAPI in Frameworks */,
+				49B0B98929FD282300404FF4 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +134,7 @@
 				4901078429F9C32200A6CB20 /* Speck.entitlements */,
 				4901078129F9C32200A6CB20 /* Preview Content */,
 				490107CA29FC035E00A6CB20 /* LoginView.swift */,
+				49B0B98D29FD581500404FF4 /* SpeckAuthManager.swift */,
 			);
 			path = Speck;
 			sourceTree = "<group>";
@@ -185,6 +192,10 @@
 			dependencies = (
 			);
 			name = Speck;
+			packageProductDependencies = (
+				49B0B98829FD282300404FF4 /* KeychainAccess */,
+				49B0B98B29FD285A00404FF4 /* SpotifyAPI */,
+			);
 			productName = Speck;
 			productReference = 4901077829F9C32100A6CB20 /* Speck.app */;
 			productType = "com.apple.product-type.application";
@@ -257,6 +268,10 @@
 				Base,
 			);
 			mainGroup = 4901076F29F9C32100A6CB20;
+			packageReferences = (
+				49B0B98729FD282300404FF4 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				49B0B98A29FD285A00404FF4 /* XCRemoteSwiftPackageReference "SpotifyAPI" */,
+			);
 			productRefGroup = 4901077929F9C32100A6CB20 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -320,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				490107C329F9DCCB00A6CB20 /* speck.swift in Sources */,
+				49B0B98E29FD581500404FF4 /* SpeckAuthManager.swift in Sources */,
 				490107C029F9DCAF00A6CB20 /* SwiftBridgeCore.swift in Sources */,
 				4901077E29F9C32100A6CB20 /* ContentView.swift in Sources */,
 				490107CB29FC035F00A6CB20 /* LoginView.swift in Sources */,
@@ -635,6 +651,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		49B0B98729FD282300404FF4 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		49B0B98A29FD285A00404FF4 /* XCRemoteSwiftPackageReference "SpotifyAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Peter-Schorn/SpotifyAPI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		49B0B98829FD282300404FF4 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49B0B98729FD282300404FF4 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		49B0B98B29FD285A00404FF4 /* SpotifyAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49B0B98A29FD285A00404FF4 /* XCRemoteSwiftPackageReference "SpotifyAPI" */;
+			productName = SpotifyAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4901077029F9C32100A6CB20 /* Project object */;
 }
