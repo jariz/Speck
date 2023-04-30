@@ -6,30 +6,31 @@
 //
 
 import SwiftUI
+import SpotifyWebAPI
 
-struct LoginError: Identifiable {
-    var id: String { message }
-    let message: String
-}
 
 struct LoginView: View {
-    @EnvironmentObject var rustApp: RustAppWrapper
+    @EnvironmentObject var spotify: Spotify
     @Environment(\.dismiss) private var dismiss
 
-    @State private var username = ""
-    @State private var password = ""
+    @AppStorage("username") private var username = ""
+    @AppStorage("password") private var password = "" // TODO: insecure!
     @State private var error: LoginError?
     @State private var isLoading = false
     
     func login () {
         Task {
             isLoading = true
-            let result = await rustApp.rust.login(username, password)
-            isLoading = false
-            if !result.ok {
-                error = LoginError(message: result.message.toString())
+            do {
+                try await self.spotify.login(username: username, password: password)
+            }
+            catch let e as LoginError {
+                self.error = e
+                isLoading = false // TODO `defer` ?
                 return
             }
+            isLoading = false
+            
             dismiss()
         }
     }

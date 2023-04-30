@@ -6,21 +6,14 @@
 //
 
 import SwiftUI
+import SpotifyWebAPI
 
 @main
 struct SpeckApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(RustAppWrapper(rust: Speck()))
+                .environmentObject(Spotify())
         }
-    }
-}
-
-class RustAppWrapper: ObservableObject {
-    var rust: Speck
-
-    init (rust: Speck) {
-        self.rust = rust
     }
 }

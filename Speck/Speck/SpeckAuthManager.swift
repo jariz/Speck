@@ -13,15 +13,15 @@ enum SpeckAuthManagerError: Error {
     case speckNotInitialized
 }
 
-public class SpeckAuthManager: SpotifyAuthorizationManager {
+public class SpeckAuthManager: SpotifyScopeAuthorizationManager {
     public init(
         accessToken: String,
         expirationDate: Date,
-        speck: Speck
+        core: SpeckCore
     ) {
         self.accessToken = accessToken
         self.expirationDate = expirationDate
-        self.speck = speck
+        self.core = core
         self.didDeauthorize = PassthroughSubject()
         self.didChange = PassthroughSubject()
         self.scopes = []
@@ -53,7 +53,7 @@ public class SpeckAuthManager: SpotifyAuthorizationManager {
         hasher.combine(self.expirationDate)
     }
     
-    public var speck: Speck?
+    public var core: SpeckCore?
     
     public var accessToken: String?
     
@@ -77,10 +77,10 @@ public class SpeckAuthManager: SpotifyAuthorizationManager {
         }
         
         return Future { promise in
-            async {
+            Task {
                 do {
-                    guard let speck = self.speck else { return promise(.failure(SpeckAuthManagerError.speckNotInitialized)) }
-                    let token = await speck.get_token()
+                    guard let core = self.core else { return promise(.failure(SpeckAuthManagerError.speckNotInitialized)) }
+                    let token = await core.get_token()
                     self.accessToken = token.access_token.toString();
                     self.expirationDate = SpeckAuthManager.dateFromSeconds(seconds: token.expires_in)
                     self.didChange.send(())
@@ -89,18 +89,9 @@ public class SpeckAuthManager: SpotifyAuthorizationManager {
                     promise(.failure(error))
                 }
             }
-        }.eraseToAnyPublisher()
-//        return Future<Void, Error> { promise in
-//            Task {
-//                guard let speck = self.speck else { return promise(.failure(SpeckAuthManagerError.speckNotInitialized)) }
-//                let token = await speck.get_token()
-//                self.accessToken = token.access_token.toString();
-//                self.expirationDate = SpeckAuthManager.dateFromSeconds(seconds: token.expires_in)
-//                self.didChange.send(())
-//                promise(.success(()))
-//            }
-//        }
-//        .eraseToAnyPublisher()
+        }
+        .receive(on: RunLoop.main)
+        .eraseToAnyPublisher()
     }
     
     public func isAuthorized(for scopes: Set<SpotifyWebAPI.Scope>) -> Bool {

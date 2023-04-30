@@ -1,12 +1,17 @@
 use env_logger::Env;
+use librespot::core::spotify_id::SpotifyId;
+use librespot::playback::audio_backend;
+use librespot::playback::config::AudioFormat;
 use librespot::{
     core::{cache::Cache, config::SessionConfig, keymaster, session::Session},
     discovery::Credentials,
+    playback::{
+        config::PlayerConfig,
+        mixer::{softmixer::SoftMixer, Mixer, MixerConfig},
+        player::Player,
+    },
 };
-use log::debug;
 use std::env;
-
-use librespot::core::keymaster::Token;
 
 const CLIENT_ID: &str = "782ae96ea60f4cdf986a766049607005";
 
@@ -40,29 +45,37 @@ mod ffi {
     }
 
     extern "Rust" {
-        type Speck;
+        type SpeckCore;
 
         #[swift_bridge(init)]
-        fn new() -> Speck;
+        fn new() -> SpeckCore;
 
         async fn login(&mut self, username: String, password: String) -> LoginResult;
 
         async fn get_token(&mut self) -> SpotifyToken;
+
+        fn init_player(&mut self);
+
+        fn load(&mut self, track_id: String);
     }
 }
 
-pub struct Speck {
+pub struct SpeckCore {
     session: Option<Session>,
+    player: Option<Player>,
 }
 
-impl Speck {
+impl SpeckCore {
     fn new() -> Self {
         env_logger::Builder::from_env(
             Env::default().default_filter_or("speck=debug,librespot=debug"),
         )
         .init();
 
-        Speck { session: None }
+        SpeckCore {
+            session: None,
+            player: None,
+        }
     }
 
     async fn get_token(&mut self) -> ffi::SpotifyToken {
@@ -73,12 +86,32 @@ impl Speck {
                 access_token: token.access_token,
                 expires_in: token.expires_in,
             })
+            .unwrap() // TODO I can't use Result<> in async because of bridge reasons but come on, improve pls...
+    }
+
+    fn init_player(&mut self) {
+        let mixer = SoftMixer::open(MixerConfig::default());
+        let (player, _) = Player::new(
+            PlayerConfig::default(),
+            self.session.clone().unwrap(),
+            mixer.get_soft_volume(),
+            move || {
+                // only rodio supported for now
+                let backend = audio_backend::find(Some("rodio".to_string())).unwrap();
+                backend(None, AudioFormat::default())
+            },
+        );
+        self.player = Some(player);
+    }
+
+    fn load(&mut self, track_id: String) {
+        self.player
+            .as_mut()
             .unwrap()
+            .load(SpotifyId::from_base62(&track_id).unwrap(), true, 0);
     }
 
     async fn login(&mut self, username: String, password: String) -> ffi::LoginResult {
-        debug!("usr {}, pw {}", username, password);
-
         let session_config = SessionConfig::default();
         let mut cache_dir = env::temp_dir();
         cache_dir.push("spotty-cache");
@@ -95,7 +128,6 @@ impl Speck {
             Ok(res) => {
                 let session = res.0; // todo nicer?
                 self.session = Some(session);
-                let token = self.get_token().await;
                 return ffi::LoginResult {
                     ok: true,
                     message: "".to_string(),
