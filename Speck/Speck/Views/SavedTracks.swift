@@ -13,24 +13,41 @@ extension SavedTrack: Identifiable {
     public var id: String { item.id.unsafelyUnwrapped }
 }
 
+extension Track {
+    public var durationFormatted: String {
+        guard let durationMS = self.durationMS else { return "" }
+        let interval = TimeInterval(durationMS / 1000)
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        return formatter.string(from: interval) ?? ""
+    }
+}
+
 struct SavedTracks: View {
     @State private var searchCancellable: AnyCancellable? = nil
     @EnvironmentObject var spotify: Spotify
     
     @State private var items: [SavedTrack] = []
+    @State private var itemCount: Int?
     @State private var selection = Set<SavedTrack.ID>()
-    @State var sortOrder: [KeyPathComparator<SavedTrack>] = [
-//        .init(\.item.name, order: SortOrder.forward)
-    ]
     
     var body: some View {
-        Table(selection: $selection, sortOrder: $sortOrder, columns: {
+        Table(items, selection: $selection) {
             TableColumn("Name", value: \.item.name)
-        }, rows: {
-            ForEach(items) { item in
-                TableRow(item)
+            TableColumn("Artist") { item in
+                Text(item.item.artists?.map({ artist in
+                    artist.name
+                }).joined(separator: ", ") ?? "")
             }
-        })
+            TableColumn("Album") { item in
+                Text(item.item.album?.name ?? "")
+            }
+            TableColumn("Duration") { item in
+                Text(item.item.durationFormatted)
+            }
+       }
         .navigationTitle("Saved tracks")
         .onChange(of: selection, perform: { newValue in
             let selected = newValue.first
@@ -50,6 +67,7 @@ struct SavedTracks: View {
                         print(completion)
                 }, receiveValue: { response in
                     self.items = response.items
+                    self.itemCount = response.total
                 })
             }
         }
