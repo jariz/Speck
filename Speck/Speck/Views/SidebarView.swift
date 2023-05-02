@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-
 struct SidebarView: View {
     @Binding var selection: DetailPage?
-    
+
     var body: some View {
-        List (selection: $selection) {
+        List(selection: $selection) {
             NavigationLink(value: DetailPage.savedTracks) {
                 Label("Saved Tracks", systemImage: "music.note.list")
             }

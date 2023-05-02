@@ -416,5 +416,68 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DF967EDF-BCB4-45D5-B2D1-E16F8DE3C496"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Speck/Model/Player.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "setTrack(id:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "DF967EDF-BCB4-45D5-B2D1-E16F8DE3C496 - b92b0ba95af774d9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (SpotifyWebAPI.Track) -&gt; () in Speck.Player.setTrack(id: Swift.String) -&gt; ()"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/Model/Player.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "124">
+               </Location>
+               <Location
+                  uuid = "DF967EDF-BCB4-45D5-B2D1-E16F8DE3C496 - d7304fc9fd99ff89"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () -&gt; () in closure #1 @Sendable () async -&gt; () in Speck.Player.init(core: Speck.SpeckCore, api: SpotifyWebAPI.SpotifyAPI&lt;Speck.SpeckAuthManager&gt;) -&gt; Speck.Player"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/Model/Player.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "1220">
+               </Location>
+               <Location
+                  uuid = "DF967EDF-BCB4-45D5-B2D1-E16F8DE3C496 - b92b0ba95af77bf4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (SpotifyWebAPI.Track) -&gt; () in Speck.Player.setTrack(id: Swift.String) -&gt; ()"
+                  moduleName = "Speck"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jari/Personal/speck/Speck/Speck/Model/Player.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -6,6 +6,7 @@
 //
 
 import XCTest
+
 @testable import Speck
 
 final class SpeckTests: XCTestCase {

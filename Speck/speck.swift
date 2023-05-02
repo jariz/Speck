@@ -1,4 +1,3 @@
-
 public class Speck: SpeckRefMut {
     var isOwned: Bool = true
 
@@ -30,9 +29,14 @@ public class SpeckRef {
     }
 }
 extension SpeckRef {
-    public func init<GenericToRustStr: ToRustStr>(_ username: GenericToRustStr, _ password: GenericToRustStr) async throws -> RustString {
-        func onComplete(cbWrapperPtr: UnsafeMutableRawPointer?, rustFnRetVal: __private__ResultPtrAndPtr) {
-            let wrapper = Unmanaged<CbWrapper$Speck$init>.fromOpaque(cbWrapperPtr!).takeRetainedValue()
+    public func init<GenericToRustStr: ToRustStr>(
+        _ username: GenericToRustStr, _ password: GenericToRustStr
+    ) async throws -> RustString {
+        func onComplete(
+            cbWrapperPtr: UnsafeMutableRawPointer?, rustFnRetVal: __private__ResultPtrAndPtr
+        ) {
+            let wrapper = Unmanaged<CbWrapper$Speck$init>.fromOpaque(cbWrapperPtr!)
+                .takeRetainedValue()
             if rustFnRetVal.is_ok {
                 wrapper.cb(.success(RustString(ptr: rustFnRetVal.ok_or_err!)))
             } else {
@@ -40,7 +44,8 @@ extension SpeckRef {
             }
         }
 
-        return try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<RustString, Error>) in
+        return try await withCheckedThrowingContinuation({
+            (continuation: CheckedContinuation<RustString, Error>) in
             let callback = { rustFnRetVal in
                 continuation.resume(with: rustFnRetVal)
             }
@@ -49,16 +54,17 @@ extension SpeckRef {
             let wrapperPtr = Unmanaged.passRetained(wrapper).toOpaque()
 
             return password.toRustStr({ passwordAsRustStr in
-                    return username.toRustStr({ usernameAsRustStr in
-                    __swift_bridge__$Speck$init(wrapperPtr, onComplete, ptr, usernameAsRustStr, passwordAsRustStr)
+                return username.toRustStr({ usernameAsRustStr in
+                    __swift_bridge__$Speck$init(
+                        wrapperPtr, onComplete, ptr, usernameAsRustStr, passwordAsRustStr)
                 })
-                })
+            })
         })
     }
     class CbWrapper$Speck$init {
-        var cb: (Result<RustString, Error>) -> ()
-    
-        public init(cb: @escaping (Result<RustString, Error>) -> ()) {
+        var cb: (Result<RustString, Error>) -> Void
+
+        public init(cb: @escaping (Result<RustString, Error>) -> Void) {
             self.cb = cb
         }
     }
@@ -73,10 +79,15 @@ extension Speck: Vectorizable {
     }
 
     public static func vecOfSelfPush(vecPtr: UnsafeMutableRawPointer, value: Speck) {
-        __swift_bridge__$Vec_Speck$push(vecPtr, {value.isOwned = false; return value.ptr;}())
+        __swift_bridge__$Vec_Speck$push(
+            vecPtr,
+            {
+                value.isOwned = false
+                return value.ptr
+            }())
     }
 
-    public static func vecOfSelfPop(vecPtr: UnsafeMutableRawPointer) -> Optional<Self> {
+    public static func vecOfSelfPop(vecPtr: UnsafeMutableRawPointer) -> Self? {
         let pointer = __swift_bridge__$Vec_Speck$pop(vecPtr)
         if pointer == nil {
             return nil
@@ -85,7 +96,7 @@ extension Speck: Vectorizable {
         }
     }
 
-    public static func vecOfSelfGet(vecPtr: UnsafeMutableRawPointer, index: UInt) -> Optional<SpeckRef> {
+    public static func vecOfSelfGet(vecPtr: UnsafeMutableRawPointer, index: UInt) -> SpeckRef? {
         let pointer = __swift_bridge__$Vec_Speck$get(vecPtr, index)
         if pointer == nil {
             return nil
@@ -94,7 +105,8 @@ extension Speck: Vectorizable {
         }
     }
 
-    public static func vecOfSelfGetMut(vecPtr: UnsafeMutableRawPointer, index: UInt) -> Optional<SpeckRefMut> {
+    public static func vecOfSelfGetMut(vecPtr: UnsafeMutableRawPointer, index: UInt) -> SpeckRefMut?
+    {
         let pointer = __swift_bridge__$Vec_Speck$get_mut(vecPtr, index)
         if pointer == nil {
             return nil
@@ -107,6 +119,3 @@ extension Speck: Vectorizable {
         __swift_bridge__$Vec_Speck$len(vecPtr)
     }
 }
-
-
-

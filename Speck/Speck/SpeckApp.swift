@@ -5,8 +5,8 @@
 //  Created by Jari on 26/04/2023.
 //
 
-import SwiftUI
 import SpotifyWebAPI
+import SwiftUI
 
 @main
 struct SpeckApp: App {
