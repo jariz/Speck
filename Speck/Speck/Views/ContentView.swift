@@ -22,13 +22,17 @@ struct ContentView: View {
         NavigationSplitView {
             SidebarView(selection: $selection)
         } detail: {
-            VStack {
-                if selection == .savedTracks {
-                    SavedTracks()
-                }
+            NavigationStack {
+                VStack {
+                    if selection == .savedTracks {
+                        SavedTracks()
+                    }
 
-                if let player = spotify.player {
-                    PlayerView().environmentObject(player)
+                    if let player = spotify.player {
+                        PlayerView()
+                            .environmentObject(player)
+                            .transition(.slide)
+                    }
                 }
             }
         }
@@ -38,11 +42,6 @@ struct ContentView: View {
                 LoginView()
                     .environmentObject(spotify)
             })
-        //        .onChange(of: presentLoginSheet) { presented in
-        //            if !presented {
-        //
-        //            }
-        //        }
     }
 }
 

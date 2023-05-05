@@ -120,6 +120,7 @@ mod ffi {
         fn player_load_track(&mut self, track_id: String);
         fn player_pause(&self);
         fn player_play(&self);
+        fn player_seek(&self, position_ms: u32);
     }
 }
 
@@ -272,6 +273,10 @@ impl SpeckCore {
 
     fn player_play(&self) {
         self.player.as_ref().unwrap().play();
+    }
+
+    fn player_seek(&self, position_ms: u32) {
+        self.player.as_ref().unwrap().seek(position_ms);
     }
 
     async fn login(&mut self, username: String, password: String) -> ffi::LoginResult {
