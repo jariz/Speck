@@ -13,18 +13,6 @@ extension SavedTrack: Identifiable {
     public var id: String { item.id! }
 }
 
-extension Track {
-    public var durationFormatted: String {
-        guard let durationMS = self.durationMS else { return "" }
-        let interval = TimeInterval(durationMS / 1000)
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.minute, .second]
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
-        return formatter.string(from: interval) ?? ""
-    }
-}
-
 struct SavedTracks: View {
     @State private var searchCancellable: AnyCancellable? = nil
     @EnvironmentObject var spotify: Spotify
@@ -33,45 +21,78 @@ struct SavedTracks: View {
     @State private var itemCount: Int?
     @State private var selection: SavedTrack.ID?
 
+    static let perPage = 50
+    @State private var currentPage: Int = 0
+
+    func fetchMore() {
+        if self.searchCancellable != nil {
+            debugPrint("Attempted to fetch more while already fetching, abort!")
+            return
+        }
+        if itemCount != nil,
+            currentPage * SavedTracks.perPage >= itemCount ?? 0 {
+            // final page reached
+            return
+        }
+        
+        self.searchCancellable = self.spotify.api?.currentUserSavedTracks(
+            limit: SavedTracks.perPage, offset: currentPage * SavedTracks.perPage
+        )
+        .receive(on: RunLoop.main)
+        .sink(
+            receiveCompletion: { completion in
+                print(completion)
+            },
+            receiveValue: { response in
+                self.items.append(contentsOf: response.items)
+                self.itemCount = response.total
+                self.currentPage += 1
+                self.searchCancellable = nil
+            })
+    }
+
     var body: some View {
         Table(items, selection: $selection) {
-            TableColumn("Name", value: \.item.name)
-            TableColumn("Artist") { item in
-                Text(
-                    item.item.artists?.map({ artist in
-                        artist.name
-                    }).joined(separator: ", ") ?? "")
+            TableColumn("") { track in
+                AsyncImage(url: track.item.album?.images?.first?.url) { image in
+                    image.resizable()
+                } placeholder: {
+                    Placeholder()
+                }
+                .frame(width: 32, height: 32)
             }
-            TableColumn("Album") { item in
-                Text(item.item.album?.name ?? "")
+            .width(32)
+            TableColumn("Title") { track in
+                VStack (alignment: .leading) {
+                    Text(track.item.name)
+                    ArtistsLabel(artists: track.item.artists).foregroundColor(.secondary)
+                }
+                .onAppear {
+                    // TODO this logic doesn't really pertain to this column itself perse but can't find a better place
+                    if track.id == items.last?.id {
+                        fetchMore()
+                    }
+                }
             }
-            TableColumn("Duration") { item in
-                Text(item.item.durationFormatted)
+            TableColumn("Album") { track in
+                Text(track.item.album?.name ?? "")
+            }
+            TableColumn("Duration") { track in
+                Text(track.item.durationFormatted)
             }
         }
-        .navigationTitle("Saved tracks")
-        .onChange(
-            of: selection,
-            perform: { newValue in
-                let item = items.first { $0.id == selection }
-                guard let item = item else {
-                    return
-                }
-                spotify.player?.loadTrack(id: item.id)
+        .onDoubleClick {
+            let item = items.first { $0.id == selection }
+            guard let item = item else {
+                return
             }
-        )
+            spotify.player?.loadTrack(id: item.id)
+        }
+        .navigationTitle("Saved tracks")
+        .navigationSubtitle(Text("\(itemCount ?? 0) total"))
         .onAppear {
             if spotify.isAuthorized {
-                self.searchCancellable = self.spotify.api?.currentUserSavedTracks()
-                    .receive(on: RunLoop.main)
-                    .sink(
-                        receiveCompletion: { completion in
-                            print(completion)
-                        },
-                        receiveValue: { response in
-                            self.items = response.items
-                            self.itemCount = response.total
-                        })
+                fetchMore()
             }
         }
     }

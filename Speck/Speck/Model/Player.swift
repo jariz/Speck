@@ -41,23 +41,25 @@ final class Player: ObservableObject {
         self.startPlayerThread()
         self.scheduleTimer()
     }
-    
-    func seek (_ positionMS: UInt32) {
+
+    func seek(_ positionMS: UInt32) {
         self.core?.player_seek(positionMS)
     }
-    
-    private func scheduleTimer () {
-        self.playStateCancellable = $playState
+
+    private func scheduleTimer() {
+        self.playStateCancellable =
+            $playState
             .receive(on: RunLoop.main)
             .sink { state in
                 self.positionTimer?.invalidate()
-                
+
                 if state == .playing {
-                    self.positionTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                    self.positionTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
+                        timer in
                         self.positionMS += 1000
                     }
                 }
-        }
+            }
     }
 
     private func startPlayerThread() {
@@ -72,28 +74,28 @@ final class Player: ObservableObject {
                     switch type {
                     case .Stopped(_, let track_id):
                         playState = .stopped
-                        setTrack(id: track_id.toString())
+                        getTrackInfo(id: track_id.toString())
                         positionMS = 0
                         durationMS = 0
                     case .Started(let play_request_id, let track_id, let position_ms):
-                        setTrack(id: track_id.toString())
+                        getTrackInfo(id: track_id.toString())
                         positionMS = position_ms
                     case .Changed(let old_track_id, let new_track_id):
-                        setTrack(id: new_track_id.toString())
+                        getTrackInfo(id: new_track_id.toString())
                     case .Loading(let play_request_id, let track_id, let position_ms):
-                        setTrack(id: track_id.toString())
+                        getTrackInfo(id: track_id.toString())
                         positionMS = position_ms
                     case .Preloading(let track_id):
-                        setTrack(id: track_id.toString())
+                        getTrackInfo(id: track_id.toString())
                     case .Playing(
                         _, let track_id, let position_ms, let duration_ms):
                         playState = .playing
-                        setTrack(id: track_id.toString())
+                        getTrackInfo(id: track_id.toString())
                         positionMS = position_ms
                         durationMS = duration_ms
                     case .Paused(_, let track_id, let position_ms, let duration_ms):
                         playState = .paused
-                        setTrack(id: track_id.toString())
+                        getTrackInfo(id: track_id.toString())
                         positionMS = position_ms
                         durationMS = duration_ms
                     case .TimeToPreloadNextTrack(let play_request_id, let track_id):
@@ -135,11 +137,11 @@ final class Player: ObservableObject {
         self.trackID = trackID
         self.durationMS = durationMS
         self.positionMS = positionMS
-        
+
         self.playState = playState
     }
 
-    private func setTrack(id: String) {
+    private func getTrackInfo(id: String) {
         if id == trackID {
             // track already loaded / being loaded, skip
             return

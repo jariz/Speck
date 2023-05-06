@@ -22,17 +22,17 @@ struct PlayerView: View {
                 player.seek(newValue)
             }
         )
-        
+
         VStack(alignment: .leading, spacing: 0) {
             if player.durationMS > 0 {
                 Slider(value: positionMS, in: 0...Double(player.durationMS))
                     .offset(y: -12)
             }
-            
+
             ZStack(alignment: .center) {
                 if let track = player.track {
                     NowPlayingView(track: track)
-                    
+
                     HStack(spacing: 16) {
                         Button(action: {}) {
                             Image(systemName: "backward.fill")
@@ -40,9 +40,9 @@ struct PlayerView: View {
                                 .frame(width: 12, height: 12)
                         }
                         .buttonStyle(.borderless)
-                        
+
                         if player.playState == .playing {
-                            Button(action:  {
+                            Button(action: {
                                 player.pause()
                             }) {
                                 Image(systemName: "pause.fill")
@@ -54,7 +54,7 @@ struct PlayerView: View {
                             .cornerRadius(50)
                         }
                         if player.playState == .paused {
-                            Button(action:  {
+                            Button(action: {
                                 player.play()
                             }) {
                                 Image(systemName: "play.fill")
@@ -65,20 +65,24 @@ struct PlayerView: View {
                             .controlSize(.large)
                             .cornerRadius(50)
                         }
-                        
+
                         Button(action: {}) {
                             Image(systemName: "forward.fill")
                                 .resizable()
                                 .frame(width: 12, height: 12)
                         }
-                            .buttonStyle(.borderless)
+                        .buttonStyle(.borderless)
                     }
                     .frame(maxWidth: .infinity)
                 }
             }
             .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
         }
-        .background(EffectsView(material: NSVisualEffectView.Material.sidebar, blendingMode: NSVisualEffectView.BlendingMode.behindWindow))
+        .background(
+            EffectsView(
+                material: NSVisualEffectView.Material.sidebar,
+                blendingMode: NSVisualEffectView.BlendingMode.behindWindow)
+        )
         .frame(maxWidth: .infinity)
 
     }

@@ -20,7 +20,7 @@ struct ArtistsLabel: View {
         //                artist.name
         //            }).joined(separator: ", ") ?? ""
         //        )
-        HStack (spacing: 0) {
+        HStack(spacing: 0) {
             ForEach(artists ?? []) { artist in
                 NavigationLink(artist.name) {
                     Text("This is artist view for \(artist.name)")
