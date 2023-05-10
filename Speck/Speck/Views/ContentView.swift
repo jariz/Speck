@@ -25,7 +25,7 @@ struct ContentView: View {
             NavigationStack {
                 VStack {
                     if selection == .savedTracks {
-                        SavedTracks()
+                        SavedTracksView()
                     }
 
                     if let player = spotify.player {

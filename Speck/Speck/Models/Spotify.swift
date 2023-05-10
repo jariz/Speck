@@ -19,31 +19,37 @@ final class Spotify: ObservableObject {
     @Published var api: SpotifyAPI<SpeckAuthManager>?
     @Published var player: Player?
 
-    private var core: SpeckCore
+    private var core: SpeckCore?
 
-    init() {
-        self.core = SpeckCore()
+    init(initializeCore: Bool = true) {
+        if initializeCore {
+            self.core = SpeckCore()
+        }
     }
 
     func login(username: String, password: String) async throws {
-        let result = await self.core.login(username, password)
+        guard let core = self.core else {
+            throw LoginError(message: "Core not initialized")
+        }
+        let result = await core.login(username, password)
         if !result.ok {
             throw LoginError(message: result.message.toString())
         }
 
-        let token = await self.core.get_token()
+        let token = await core.get_token()
 
         await MainActor.run {
-            self.api = SpotifyAPI(
+            let api = SpotifyAPI(
                 authorizationManager: SpeckAuthManager(
                     accessToken: token.access_token.toString(),
                     expirationDate: SpeckAuthManager.dateFromSeconds(seconds: token.expires_in),
-                    core: self.core
+                    core: core
                 ))
+            self.api = api
 
             self.isAuthorized = true
-            self.api = self.api!
-            self.player = Player(core: self.core, api: self.api!)
+            self.api = api
+            self.player = Player(core: core, api: api)
         }
 
     }

@@ -13,6 +13,6 @@ crate-type = ["staticlib"]
 
 [dependencies]
 swift-bridge = {version = "0.1", features = ["async"]}
-librespot = "0.4.2"
+librespot = { git = "https://github.com/librespot-org/librespot.git", branch = "dev" }
 env_logger = "0.10.0"
 log = "0.4.17"

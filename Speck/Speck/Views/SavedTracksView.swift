@@ -13,7 +13,7 @@ extension SavedTrack: Identifiable {
     public var id: String { item.id! }
 }
 
-struct SavedTracks: View {
+struct SavedTracksView: View {
     @State private var searchCancellable: AnyCancellable? = nil
     @EnvironmentObject var spotify: Spotify
 
@@ -25,18 +25,18 @@ struct SavedTracks: View {
     @State private var currentPage: Int = 0
 
     func fetchMore() {
-        if self.searchCancellable != nil {
+        if searchCancellable != nil {
             debugPrint("Attempted to fetch more while already fetching, abort!")
             return
         }
         if itemCount != nil,
-            currentPage * SavedTracks.perPage >= itemCount ?? 0 {
+            currentPage * SavedTracksView.perPage >= itemCount ?? 0 {
             // final page reached
             return
         }
         
-        self.searchCancellable = self.spotify.api?.currentUserSavedTracks(
-            limit: SavedTracks.perPage, offset: currentPage * SavedTracks.perPage
+        searchCancellable = spotify.api?.currentUserSavedTracks(
+            limit: SavedTracksView.perPage, offset: currentPage * SavedTracksView.perPage
         )
         .receive(on: RunLoop.main)
         .sink(
@@ -44,10 +44,10 @@ struct SavedTracks: View {
                 print(completion)
             },
             receiveValue: { response in
-                self.items.append(contentsOf: response.items)
-                self.itemCount = response.total
-                self.currentPage += 1
-                self.searchCancellable = nil
+                items.append(contentsOf: response.items)
+                itemCount = response.total
+                currentPage += 1
+                searchCancellable = nil
             })
     }
 
@@ -57,7 +57,7 @@ struct SavedTracks: View {
                 AsyncImage(url: track.item.album?.images?.first?.url) { image in
                     image.resizable()
                 } placeholder: {
-                    Placeholder()
+                    PlaceholderView()
                 }
                 .frame(width: 32, height: 32)
             }
@@ -68,7 +68,7 @@ struct SavedTracks: View {
                     ArtistsLabel(artists: track.item.artists).foregroundColor(.secondary)
                 }
                 .onAppear {
-                    // TODO this logic doesn't really pertain to this column itself perse but can't find a better place
+                    // TODO this logic doesn't really pertain to this column itself but can't find a better place
                     if track.id == items.last?.id {
                         fetchMore()
                     }
@@ -81,6 +81,7 @@ struct SavedTracks: View {
                 Text(track.item.durationFormatted)
             }
         }
+        // TODO find a way to use this modifier on specific rows instead of the entire table
         .onDoubleClick {
             let item = items.first { $0.id == selection }
             guard let item = item else {
@@ -100,6 +101,6 @@ struct SavedTracks: View {
 
 struct SavedTracks_Previews: PreviewProvider {
     static var previews: some View {
-        SavedTracks()
+        SavedTracksView()
     }
 }

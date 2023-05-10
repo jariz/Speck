@@ -21,7 +21,7 @@ struct NowPlayingView: View {
                 ) { image in
                     image.resizable()
                 } placeholder: {
-                    Placeholder()
+                    PlaceholderView()
                 }
                 .frame(width: 64, height: 64)
 

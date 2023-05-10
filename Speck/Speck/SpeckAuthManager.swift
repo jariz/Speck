@@ -111,7 +111,7 @@ public class SpeckAuthManager: SpotifyScopeAuthorizationManager {
 
     }
 
-    static public func dateFromSeconds(seconds: UInt32) -> Date {
+    static public func dateFromSeconds(seconds: UInt64) -> Date {
         return Date(timeIntervalSinceNow: TimeInterval(integerLiteral: Int64(seconds)))
     }
 }

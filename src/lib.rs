@@ -1,10 +1,11 @@
 use env_logger::Env;
-use librespot::core::spotify_id::SpotifyId;
+use librespot::core::spotify_id::{SpotifyId, SpotifyItemType};
+use librespot::metadata::{Artist, Metadata};
 use librespot::playback::audio_backend;
 use librespot::playback::config::AudioFormat;
 use librespot::playback::player::{PlayerEvent, PlayerEventChannel};
 use librespot::{
-    core::{cache::Cache, config::SessionConfig, keymaster, session::Session},
+    core::{cache::Cache, config::SessionConfig, session::Session},
     discovery::Credentials,
     playback::{
         config::PlayerConfig,
@@ -43,58 +44,106 @@ mod ffi {
     #[swift_bridge::bridge(swift_repr = "struct")]
     struct SpotifyToken {
         access_token: String,
-        expires_in: u32,
+        expires_in: u64,
     }
 
     // This is basically a redefinition of librespot's PlayerEvent beacuse of ✨ bridge reasons ✨
     enum SpeckPlayerEvent {
+        // Fired when the player is stopped (e.g. by issuing a "stop" command to the player).
         Stopped {
             play_request_id: u64,
             track_id: String,
         },
-        Started {
-            play_request_id: u64,
-            track_id: String,
-            position_ms: u32,
-        },
-        Changed {
-            old_track_id: String,
-            new_track_id: String,
-        },
+        // The player is delayed by loading a track.
         Loading {
             play_request_id: u64,
             track_id: String,
             position_ms: u32,
         },
+        // The player is preloading a track.
         Preloading {
             track_id: String,
         },
+        // The player is playing a track.
+        // This event is issued at the start of playback of whenever the position must be communicated
+        // because it is out of sync. This includes:
+        // start of a track
+        // un-pausing
+        // after a seek
+        // after a buffer-underrun
         Playing {
             play_request_id: u64,
             track_id: String,
             position_ms: u32,
-            duration_ms: u32,
         },
+        // The player entered a paused state.
         Paused {
             play_request_id: u64,
             track_id: String,
             position_ms: u32,
-            duration_ms: u32,
         },
+        // The player thinks it's a good idea to issue a preload command for the next track now.
+        // This event is intended for use within spirc.
         TimeToPreloadNextTrack {
             play_request_id: u64,
             track_id: String,
         },
+        // The player reached the end of a track.
+        // This event is intended for use within spirc. Spirc will respond by issuing another command.
         EndOfTrack {
             play_request_id: u64,
             track_id: String,
         },
+        // The player was unable to load the requested track.
         Unavailable {
             play_request_id: u64,
             track_id: String,
         },
-        VolumeSet {
+        // The mixer volume was set to a new level.
+        VolumeChanged {
             volume: u16,
+        },
+        PositionCorrection {
+            play_request_id: u64,
+            track_id: String,
+            position_ms: u32,
+        },
+        Seeked {
+            play_request_id: u64,
+            track_id: String,
+            position_ms: u32,
+        },
+        TrackChanged {
+            // TODO richer track info
+            // audio_item: Box<AudioItem>,
+            track_id: String,
+            duration_ms: u32,
+        },
+        SessionConnected {
+            connection_id: String,
+            user_name: String,
+        },
+        SessionDisconnected {
+            connection_id: String,
+            user_name: String,
+        },
+        SessionClientChanged {
+            client_id: String,
+            client_name: String,
+            client_brand_name: String,
+            client_model_name: String,
+        },
+        ShuffleChanged {
+            shuffle: bool,
+        },
+        RepeatChanged {
+            enable_repeat: bool,
+        },
+        AutoPlayChanged {
+            auto_play: bool,
+        },
+        FilterExplicitContentChanged {
+            filter: bool,
         },
     }
 
@@ -146,18 +195,21 @@ impl SpeckCore {
 
     async fn get_token(&mut self) -> ffi::SpotifyToken {
         let session = self.session.as_ref().unwrap();
-        keymaster::get_token(&session, CLIENT_ID, SCOPES)
+
+        session
+            .token_provider()
+            .get_token(SCOPES)
             .await
             .map(|token| ffi::SpotifyToken {
                 access_token: token.access_token,
-                expires_in: token.expires_in,
+                expires_in: token.expires_in.as_secs(),
             })
             .unwrap() // TODO I can't use Result<> in async because of bridge reasons but come on, improve pls...
     }
 
     fn init_player(&mut self) {
         let mixer = SoftMixer::open(MixerConfig::default());
-        let (player, mut channel) = Player::new(
+        let player = Player::new(
             PlayerConfig::default(),
             self.session.clone().unwrap(),
             mixer.get_soft_volume(),
@@ -167,6 +219,8 @@ impl SpeckCore {
                 backend(None, AudioFormat::default())
             },
         );
+
+        let channel = player.get_player_event_channel();
         self.player = Some(player);
         self.channel = Some(channel);
     }
@@ -177,22 +231,11 @@ impl SpeckCore {
         ffi::PlayerEventResult {
             event: match event {
                 // this code was brought to you by github copilot
-                PlayerEvent::Started {
-                    play_request_id,
-                    track_id,
-                    position_ms,
-                } => ffi::SpeckPlayerEvent::Started {
-                    play_request_id,
-                    track_id: track_id.to_base62().unwrap(),
-                    position_ms,
-                },
                 PlayerEvent::Playing {
                     play_request_id,
                     track_id,
                     position_ms,
-                    duration_ms,
                 } => ffi::SpeckPlayerEvent::Playing {
-                    duration_ms,
                     play_request_id,
                     position_ms,
                     track_id: track_id.to_base62().unwrap(),
@@ -201,37 +244,9 @@ impl SpeckCore {
                     play_request_id,
                     track_id,
                     position_ms,
-                    duration_ms,
                 } => ffi::SpeckPlayerEvent::Paused {
-                    duration_ms,
                     play_request_id,
                     position_ms,
-                    track_id: track_id.to_base62().unwrap(),
-                },
-                PlayerEvent::Stopped {
-                    play_request_id,
-                    track_id,
-                } => ffi::SpeckPlayerEvent::Stopped {
-                    play_request_id,
-                    track_id: track_id.to_base62().unwrap(),
-                },
-                PlayerEvent::Changed {
-                    old_track_id,
-                    new_track_id,
-                } => ffi::SpeckPlayerEvent::Changed {
-                    old_track_id: old_track_id.to_base62().unwrap(),
-                    new_track_id: new_track_id.to_base62().unwrap(),
-                },
-                PlayerEvent::Loading {
-                    play_request_id,
-                    track_id,
-                    position_ms,
-                } => ffi::SpeckPlayerEvent::Loading {
-                    play_request_id,
-                    track_id: track_id.to_base62().unwrap(),
-                    position_ms,
-                },
-                PlayerEvent::Preloading { track_id } => ffi::SpeckPlayerEvent::Preloading {
                     track_id: track_id.to_base62().unwrap(),
                 },
                 PlayerEvent::TimeToPreloadNextTrack {
@@ -248,6 +263,87 @@ impl SpeckCore {
                     play_request_id,
                     track_id: track_id.to_base62().unwrap(),
                 },
+                PlayerEvent::TrackChanged { audio_item } => ffi::SpeckPlayerEvent::TrackChanged {
+                    track_id: audio_item.track_id.to_base62().unwrap(),
+                    duration_ms: audio_item.duration_ms,
+                },
+                PlayerEvent::SessionConnected {
+                    connection_id,
+                    user_name,
+                } => ffi::SpeckPlayerEvent::SessionConnected {
+                    connection_id,
+                    user_name,
+                },
+                PlayerEvent::SessionDisconnected {
+                    connection_id,
+                    user_name,
+                } => ffi::SpeckPlayerEvent::SessionDisconnected {
+                    connection_id,
+                    user_name,
+                },
+                PlayerEvent::VolumeChanged { volume } => {
+                    ffi::SpeckPlayerEvent::VolumeChanged { volume }
+                }
+                PlayerEvent::RepeatChanged { repeat } => ffi::SpeckPlayerEvent::RepeatChanged {
+                    enable_repeat: repeat,
+                },
+                PlayerEvent::ShuffleChanged { shuffle } => {
+                    ffi::SpeckPlayerEvent::ShuffleChanged { shuffle }
+                }
+                PlayerEvent::FilterExplicitContentChanged { filter } => {
+                    ffi::SpeckPlayerEvent::FilterExplicitContentChanged { filter }
+                }
+                PlayerEvent::AutoPlayChanged { auto_play } => {
+                    ffi::SpeckPlayerEvent::AutoPlayChanged { auto_play }
+                }
+                PlayerEvent::Stopped {
+                    play_request_id,
+                    track_id,
+                } => ffi::SpeckPlayerEvent::Stopped {
+                    play_request_id,
+                    track_id: track_id.to_base62().unwrap(),
+                },
+                PlayerEvent::Loading {
+                    play_request_id,
+                    track_id,
+                    position_ms,
+                } => ffi::SpeckPlayerEvent::Loading {
+                    play_request_id,
+                    track_id: track_id.to_base62().unwrap(),
+                    position_ms,
+                },
+                PlayerEvent::Seeked {
+                    play_request_id,
+                    track_id,
+                    position_ms,
+                } => ffi::SpeckPlayerEvent::Seeked {
+                    play_request_id,
+                    track_id: track_id.to_base62().unwrap(),
+                    position_ms,
+                },
+                PlayerEvent::PositionCorrection {
+                    play_request_id,
+                    track_id,
+                    position_ms,
+                } => ffi::SpeckPlayerEvent::PositionCorrection {
+                    play_request_id,
+                    track_id: track_id.to_base62().unwrap(),
+                    position_ms,
+                },
+                PlayerEvent::Preloading { track_id } => ffi::SpeckPlayerEvent::Preloading {
+                    track_id: track_id.to_base62().unwrap(),
+                },
+                PlayerEvent::SessionClientChanged {
+                    client_id,
+                    client_name,
+                    client_brand_name,
+                    client_model_name,
+                } => ffi::SpeckPlayerEvent::SessionClientChanged {
+                    client_id,
+                    client_name,
+                    client_brand_name,
+                    client_model_name,
+                },
                 PlayerEvent::Unavailable {
                     play_request_id,
                     track_id,
@@ -255,16 +351,23 @@ impl SpeckCore {
                     play_request_id,
                     track_id: track_id.to_base62().unwrap(),
                 },
-                PlayerEvent::VolumeSet { volume } => ffi::SpeckPlayerEvent::VolumeSet { volume },
             },
         }
     }
 
+    async fn get_expanded_artist_info(&self, track_id: String) {
+        let mut id = SpotifyId::from_base62(&track_id).unwrap();
+        id.item_type = SpotifyItemType::Track;
+        let artist = Artist::get(self.session.as_ref().unwrap(), &id)
+            .await
+            .unwrap();
+        artist.portraits;
+    }
+
     fn player_load_track(&mut self, track_id: String) {
-        self.player
-            .as_mut()
-            .unwrap()
-            .load(SpotifyId::from_base62(&track_id).unwrap(), true, 0);
+        let mut id = SpotifyId::from_base62(&track_id).unwrap();
+        id.item_type = SpotifyItemType::Track;
+        self.player.as_mut().unwrap().load(id, true, 0);
     }
 
     fn player_pause(&self) {
@@ -290,11 +393,11 @@ impl SpeckCore {
             Some(s) => s,
             None => Credentials::with_password(username, password),
         };
-        let res = Session::connect(session_config, credentials, None, true).await;
+        let session = Session::new(session_config, Some(cache));
+        let res = session.connect(credentials, true).await;
 
         match res {
             Ok(res) => {
-                let session = res.0; // todo nicer?
                 self.session = Some(session);
                 return ffi::LoginResult {
                     ok: true,
