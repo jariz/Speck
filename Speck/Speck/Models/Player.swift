@@ -121,6 +121,8 @@ final class Player: ObservableObject {
                         print("NOTIMPL AutoPlayChanged")
                     case .FilterExplicitContentChanged(filter: let filter):
                         print("NOTIMPL .FilterExplicitContentChanged")
+                    case .PlayRequestIdChanged(play_request_id: let play_request_id):
+                        print("NOTIMPL .PlayRequestIdChanged")
                     }
                 }
 

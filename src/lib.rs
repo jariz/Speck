@@ -15,6 +15,7 @@ use librespot::{
 };
 use log::debug;
 use std::env;
+use std::sync::Arc;
 
 const CLIENT_ID: &str = "782ae96ea60f4cdf986a766049607005";
 
@@ -34,14 +35,13 @@ playlist-modify-public";
 
 #[swift_bridge::bridge]
 mod ffi {
-
-    #[swift_bridge::bridge(swift_repr = "struct")]
+    #[swift_bridge(swift_repr = "struct")]
     struct LoginResult {
         ok: bool,
         message: String,
     }
 
-    #[swift_bridge::bridge(swift_repr = "struct")]
+    #[swift_bridge(swift_repr = "struct")]
     struct SpotifyToken {
         access_token: String,
         expires_in: u64,
@@ -145,9 +145,12 @@ mod ffi {
         FilterExplicitContentChanged {
             filter: bool,
         },
+        PlayRequestIdChanged {
+            play_request_id: u64,
+        },
     }
 
-    #[swift_bridge::bridge(swift_repr = "struct")]
+    #[swift_bridge(swift_repr = "struct")]
     struct PlayerEventResult {
         event: SpeckPlayerEvent,
     }
@@ -175,7 +178,7 @@ mod ffi {
 
 pub struct SpeckCore {
     session: Option<Session>,
-    player: Option<Player>,
+    player: Option<Arc<Player>>,
     channel: Option<PlayerEventChannel>,
 }
 
@@ -351,6 +354,9 @@ impl SpeckCore {
                     play_request_id,
                     track_id: track_id.to_base62().unwrap(),
                 },
+                PlayerEvent::PlayRequestIdChanged { play_request_id } => {
+                    ffi::SpeckPlayerEvent::PlayRequestIdChanged { play_request_id }
+                }
             },
         }
     }
@@ -397,7 +403,7 @@ impl SpeckCore {
         let res = session.connect(credentials, true).await;
 
         match res {
-            Ok(res) => {
+            Ok(_) => {
                 self.session = Some(session);
                 return ffi::LoginResult {
                     ok: true,
