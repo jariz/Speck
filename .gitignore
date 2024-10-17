@@ -106,3 +106,5 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+.nvim/
+.vscode/

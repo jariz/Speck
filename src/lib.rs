@@ -17,8 +17,35 @@ use log::debug;
 use std::env;
 use std::sync::Arc;
 
-const CLIENT_ID: &str = "782ae96ea60f4cdf986a766049607005";
-
+const CLIENT_ID: &str = "65b708073fc0480ea92a077233ca87bd";
+static OAUTH_SCOPES: &[&str] = &[
+    "app-remote-control",
+    "playlist-modify",
+    "playlist-modify-private",
+    "playlist-modify-public",
+    "playlist-read",
+    "playlist-read-collaborative",
+    "playlist-read-private",
+    "streaming",
+    "ugc-image-upload",
+    "user-follow-modify",
+    "user-follow-read",
+    "user-library-modify",
+    "user-library-read",
+    "user-modify",
+    "user-modify-playback-state",
+    "user-modify-private",
+    "user-personalized",
+    "user-read-birthdate",
+    "user-read-currently-playing",
+    "user-read-email",
+    "user-read-play-history",
+    "user-read-playback-position",
+    "user-read-playback-state",
+    "user-read-private",
+    "user-read-recently-played",
+    "user-top-read",
+];
 const SCOPES: &str = "user-read-private,\
 playlist-read-private,\
 playlist-read-collaborative,\
@@ -161,7 +188,7 @@ mod ffi {
         #[swift_bridge(init)]
         fn new() -> SpeckCore;
 
-        async fn login(&mut self, username: String, password: String) -> LoginResult;
+        async fn login(&mut self) -> LoginResult;
 
         async fn get_token(&mut self) -> SpotifyToken;
 
@@ -388,7 +415,7 @@ impl SpeckCore {
         self.player.as_ref().unwrap().seek(position_ms);
     }
 
-    async fn login(&mut self, username: String, password: String) -> ffi::LoginResult {
+    async fn login(&mut self) -> ffi::LoginResult {
         let session_config = SessionConfig::default();
         let mut cache_dir = env::temp_dir();
         cache_dir.push("spotty-cache");
@@ -397,7 +424,21 @@ impl SpeckCore {
         let cached_credentials = cache.credentials();
         let credentials = match cached_credentials {
             Some(s) => s,
-            None => Credentials::with_password(username, password),
+            None => {
+                match librespot::oauth::get_access_token(
+                    CLIENT_ID,
+                    &"http://127.0.0.1:5588/login".to_string(),
+                    OAUTH_SCOPES.to_vec(),
+                ) {
+                    Ok(token) => Credentials::with_access_token(token.access_token),
+                    Err(err) => {
+                        return ffi::LoginResult {
+                            ok: false,
+                            message: err.to_string(),
+                        }
+                    }
+                }
+            }
         };
         let session = Session::new(session_config, Some(cache));
         let res = session.connect(credentials, true).await;
@@ -405,10 +446,10 @@ impl SpeckCore {
         match res {
             Ok(_) => {
                 self.session = Some(session);
-                return ffi::LoginResult {
+                ffi::LoginResult {
                     ok: true,
                     message: "".to_string(),
-                };
+                }
             }
             // Err(err) => Err(format!("{:?}", err)),
             Err(err) => ffi::LoginResult {
