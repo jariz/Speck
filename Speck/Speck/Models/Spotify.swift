@@ -172,9 +172,10 @@ final class Spotify: ObservableObject {
 //        }
         
         client.authorize { authParameters, error in
-            if let params = authParameters {
+            if let params = authParameters, let accessToken = client.accessToken {
                 print("Authorized! Access token is: \(client.accessToken ?? "none")")
                 // Handle successful authorization
+                completion(.success(accessToken))
             }
             else if let error = error {
                 completion(.failure(error))
