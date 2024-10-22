@@ -35,7 +35,7 @@ struct SavedTracksView: View {
             return
         }
         
-        searchCancellable = spotify.api?.currentUserSavedTracks(
+        searchCancellable = spotify.api.currentUserSavedTracks(
             limit: SavedTracksView.perPage, offset: currentPage * SavedTracksView.perPage
         )
         .receive(on: RunLoop.main)

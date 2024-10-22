@@ -17,7 +17,7 @@ struct ArtistView: View {
     
     func fetchArtistInfo () {
         debugPrint(artist)
-        artistInfoCancellable =  spotify.api?.artist(artist.uri!)
+        artistInfoCancellable =  spotify.api.artist(artist.uri!)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { completion in
                 debugPrint(completion)
@@ -49,12 +49,5 @@ struct ArtistView: View {
                 }
                 
             }
-    }
-}
-
-struct ArtistView_Previews: PreviewProvider {
-    static var previews: some View {
-        ArtistView(artist: Artist(name: "Bonobo"))
-            .environmentObject(Spotify(initializeCore: false))
     }
 }

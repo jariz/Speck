@@ -14,6 +14,7 @@ struct LoginView: View {
 
     @State private var error: IdentifiableError?
     @State private var isLoading = true
+    @State private var isAuthenticating = false
     
     var loginWhenAppearing = false
     
@@ -24,8 +25,10 @@ struct LoginView: View {
     var body: some View {
         VStack {
             ProgressView()
-            Text("Signing in...").font(.largeTitle).padding(.bottom, 10)
-            Text("A page was opened in your browser.").foregroundStyle(.secondary)
+            Text("Signing in...").font(.largeTitle)
+            if isAuthenticating {
+                Text("A page was opened in your browser.").foregroundStyle(.secondary).padding(.top, 10)
+            }
         }
         .padding(20)
         .frame(width: 400, height: 200)
@@ -35,36 +38,17 @@ struct LoginView: View {
                 dismissButton: .default(Text("OK")))
         }
         .onAppear {
-            startAuthentication()
-        }
-    }
-    
-    func startAuthentication () {
-        // todo this code's kinda rough
-        
-        spotify.getAccessToken { result in
-            switch result {
-                case .success(let token):
-                Task {
-                    do {
-                        try await spotify.login(accessToken: token)
-                    } catch {
-                        self.error = IdentifiableError(error: error)
+            Task {
+                do {
+                    if !spotify.isAuthorized {
+                        self.isAuthenticating = true
+                        try await spotify.authorize()
                     }
+                } catch {
+                    self.error = IdentifiableError(error: error)
                 }
-                break;
-            case .failure(let error):
-                self.error = IdentifiableError(error: error)
-                isLoading = false
             }
         }
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-            .environmentObject(Spotify(initializeCore: false))
     }
 }
 

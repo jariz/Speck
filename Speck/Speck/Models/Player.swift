@@ -30,20 +30,20 @@ final class Player: ObservableObject {
     private var playStateCancellable: AnyCancellable? = nil
     private var positionTimer: Timer? = nil
 
-    private var core: SpeckCore?
-    private var api: SpotifyAPI<SpeckAuthManager>?
+    private var core: SpeckCore
+    private var api: SpotifyAPI<AuthorizationCodeFlowPKCEManager>
 
-    init(core: SpeckCore, api: SpotifyAPI<SpeckAuthManager>) {
+    init(core: SpeckCore, api: SpotifyAPI<AuthorizationCodeFlowPKCEManager>) {
         self.core = core
         self.api = api
 
-        self.core?.init_player()
+        self.core.init_player()
         self.startPlayerThread()
         self.scheduleTimer()
     }
 
     func seek(_ positionMS: UInt32) {
-        self.core?.player_seek(positionMS)
+        self.core.player_seek(positionMS)
     }
 
     private func scheduleTimer() {
@@ -65,9 +65,7 @@ final class Player: ObservableObject {
     private func startPlayerThread() {
         Task(priority: .background) {
             while true {
-                guard let result = await self.core?.get_player_event() else {
-                    continue
-                }
+                let result = await self.core.get_player_event()
 
                 let type = result.event
                 await MainActor.run {
@@ -112,7 +110,7 @@ final class Player: ObservableObject {
                     case .SessionDisconnected(connection_id: let connection_id, user_name: let user_name):
                         print("NOTIMPL .SessionDisconnected")
                     case .SessionClientChanged(client_id: let client_id, client_name: let client_name, client_brand_name: let client_brand_name, client_model_name: let client_model_name):
-                        print("NOTIMPL .SessionDisconnected")
+                        print("NOTIMPL .SessionClientChanged")
                     case .ShuffleChanged(shuffle: let shuffle):
                         print("NOTIMPL .ShuffleChanged")
                     case .RepeatChanged(enable_repeat: let enable_repeat):
@@ -131,33 +129,6 @@ final class Player: ObservableObject {
         }
     }
 
-    // this is for mock usage ONLY. it will instantiate a dead player.
-    init(
-        trackName: String, artistNames: [String], positionMS: UInt32, durationMS: UInt32,
-        playState: PlayState, trackID: String
-    ) {
-        self.track = Track(
-            name: trackName,
-            album: Album(
-                name: "Persona",
-                images: [
-                    SpotifyImage(
-                        url: URL(
-                            string:
-                                "https://i.scdn.co/image/ab67616d00001e02370bd5f81f88ca7d7b05ec43")!
-                    )
-                ]),
-            artists: artistNames.map { Artist(name: $0, id: $0) },
-            isLocal: false,
-            isExplicit: true
-        )
-        self.trackID = trackID
-        self.durationMS = durationMS
-        self.positionMS = positionMS
-
-        self.playState = playState
-    }
-
     private func getTrackInfo(id: String) {
         if id == trackID {
             // track already loaded / being loaded, skip
@@ -165,7 +136,7 @@ final class Player: ObservableObject {
         }
 
         self.trackID = id
-        self.trackInfoCancellable = self.api?.track("spotify:track:\(id)")
+        self.trackInfoCancellable = self.api.track("spotify:track:\(id)")
             .receive(on: RunLoop.main)
             .sink(
                 receiveCompletion: { completion in
@@ -177,14 +148,14 @@ final class Player: ObservableObject {
     }
 
     public func loadTrack(id: String) {
-        self.core?.player_load_track(id)
+        self.core.player_load_track(id)
     }
 
     public func play() {
-        self.core?.player_play()
+        self.core.player_play()
     }
 
     public func pause() {
-        self.core?.player_pause()
+        self.core.player_pause()
     }
 }

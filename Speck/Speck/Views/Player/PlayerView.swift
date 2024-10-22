@@ -87,15 +87,4 @@ struct PlayerView: View {
 
     }
 }
-
-struct PlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayerView()
-            .environmentObject(
-                Player(
-                    trackName: "Atlas Corporation",
-                    artistNames: ["Nathan Micay", "Eiffel 65"],
-                    positionMS: 64 * 1000,
-                    durationMS: 154 * 1000, playState: .playing, trackID: "123456"))
-    }
-}
+ 
