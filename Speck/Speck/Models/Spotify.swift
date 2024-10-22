@@ -7,8 +7,6 @@
 
 import AppKit
 import Foundation
-import Network
-import OAuth2
 import SpotifyWebAPI
 import Vapor
 import KeychainAccess
@@ -45,13 +43,54 @@ let OAUTH_SCOPES = [
     "user-top-read",
 ]
 
-enum SpeckError: Error {
-    case redirectUrlParsingFailed
-}
-
 final class Spotify: ObservableObject {
     @Published var player: Player?
     private var core = SpeckCore()
+    
+    /// The key in the keychain that is used to store the authorization
+    /// information: "authorizationManager".
+    static let authorizationManagerKey = "authorizationManager"
+    
+    /// The URL that Spotify will redirect to after the user either authorizes
+    /// or denies authorization for your application.
+    static let loginCallbackURL = URL(
+        string: "http://127.0.0.1:\(OAUTH_PORT)/login"
+    )!
+    
+    var authorizationState = String.randomURLSafe(length: 128)
+    var codeVerifier: String
+    var codeChallenge: String
+    
+    /**
+     Whether or not the application has been authorized. If `true`, then you can
+     begin making requests to the Spotify web API using the `api` property of
+     this class, which contains an instance of `SpotifyAPI`.
+
+     This property provides a convenient way for the user interface to be
+     updated based on whether the user has logged in with their Spotify account
+     yet. For example, you could use this property disable UI elements that
+     require the user to be logged in.
+
+     This property is updated by `authorizationManagerDidChange()`, which is
+     called every time the authorization information changes, and
+     `authorizationManagerDidDeauthorize()`, which is called every time
+     `SpotifyAPI.authorizationManager.deauthorize()` is called.
+     */
+    @Published var isAuthorized = false
+    
+    /// The keychain to store the authorization information in.
+    private let keychain = Keychain(service: "io.jari.Speck-spotify")
+    
+    /// An instance of `SpotifyAPI` that you use to make requests to the Spotify
+    /// web API.
+    let api = SpotifyAPI(
+        authorizationManager: AuthorizationCodeFlowPKCEManager(
+            clientId: OAUTH_CLIENT_ID
+        )
+    )
+    
+    var cancellables: [AnyCancellable] = []
+
 
     init() {
         self.codeVerifier = String.randomURLSafe(length: 128)
@@ -106,50 +145,6 @@ final class Spotify: ObservableObject {
         }
     }
     
-    /// The key in the keychain that is used to store the authorization
-    /// information: "authorizationManager".
-    static let authorizationManagerKey = "authorizationManager"
-    
-    /// The URL that Spotify will redirect to after the user either authorizes
-    /// or denies authorization for your application.
-    static let loginCallbackURL = URL(
-        string: "http://127.0.0.1:\(OAUTH_PORT)/login"
-    )!
-    
-    var authorizationState = String.randomURLSafe(length: 128)
-    var codeVerifier: String
-    var codeChallenge: String
-    
-    /**
-     Whether or not the application has been authorized. If `true`, then you can
-     begin making requests to the Spotify web API using the `api` property of
-     this class, which contains an instance of `SpotifyAPI`.
-
-     This property provides a convenient way for the user interface to be
-     updated based on whether the user has logged in with their Spotify account
-     yet. For example, you could use this property disable UI elements that
-     require the user to be logged in.
-
-     This property is updated by `authorizationManagerDidChange()`, which is
-     called every time the authorization information changes, and
-     `authorizationManagerDidDeauthorize()`, which is called every time
-     `SpotifyAPI.authorizationManager.deauthorize()` is called.
-     */
-    @Published var isAuthorized = false
-    
-    /// The keychain to store the authorization information in.
-    private let keychain = Keychain(service: "io.jari.Speck")
-    
-    /// An instance of `SpotifyAPI` that you use to make requests to the Spotify
-    /// web API.
-    let api = SpotifyAPI(
-        authorizationManager: AuthorizationCodeFlowPKCEManager(
-            clientId: OAUTH_CLIENT_ID
-        )
-    )
-    
-    var cancellables: [AnyCancellable] = []
-
     func authorize() async throws {
         let authorizationURL = api.authorizationManager.makeAuthorizationURL(
             redirectURI: Self.loginCallbackURL,
@@ -279,16 +274,4 @@ final class Spotify: ObservableObject {
             }
         }
     }
-    // func login(accessToken: String) async throws {
-    //     let result = await core.login(accessToken)
-    //     if !result.ok {
-    //         throw LoginError(message: result.message.toString())
-    //     }
-    //
-    //     await MainActor.run {
-    //         self.player = Player(core: core, api: api)
-    //         self.isAuthorized = true
-    //     }
-    // }
-
 }

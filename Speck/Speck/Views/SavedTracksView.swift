@@ -91,7 +91,7 @@ struct SavedTracksView: View {
         }
         .navigationTitle("Saved tracks")
         .navigationSubtitle(Text("\(itemCount ?? 0) total"))
-        .onAppear {
+        .onChange(of: spotify.isAuthorized) {
             if spotify.isAuthorized {
                 fetchMore()
             }
