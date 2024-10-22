@@ -40,10 +40,18 @@ struct LoginView: View {
     }
     
     func startAuthentication () {
+        // todo this code's kinda rough
+        
         spotify.getAccessToken { result in
             switch result {
-                case .success:
-                dismiss()
+                case .success(let token):
+                Task {
+                    do {
+                        try await spotify.login(accessToken: token)
+                    } catch {
+                        self.error = IdentifiableError(error: error)
+                    }
+                }
                 break;
             case .failure(let error):
                 self.error = IdentifiableError(error: error)

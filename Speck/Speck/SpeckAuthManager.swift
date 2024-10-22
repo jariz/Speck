@@ -82,10 +82,13 @@ public class SpeckAuthManager: SpotifyScopeAuthorizationManager {
                     guard let core = self.core else {
                         return promise(.failure(SpeckAuthManagerError.speckNotInitialized))
                     }
-                    let token = await core.get_token()
-                    self.accessToken = token.access_token.toString()
-                    self.expirationDate = SpeckAuthManager.dateFromSeconds(
-                        seconds: token.expires_in)
+
+                    // TODO fix lol
+                    
+//                    let token = await core.get_token()
+//                    self.accessToken = token.access_token.toString()
+//                    self.expirationDate = SpeckAuthManager.dateFromSeconds(
+//                        seconds: token.expires_in)
                     self.didChange.send(())
                     promise(.success(()))
                 } catch {

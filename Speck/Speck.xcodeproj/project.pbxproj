@@ -23,6 +23,7 @@
 		490107CB29FC035F00A6CB20 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490107CA29FC035E00A6CB20 /* LoginView.swift */; };
 		490607AD2CBDD1D600ACC0A6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490607AC2CBDD1D600ACC0A6 /* SystemConfiguration.framework */; };
 		4923E5142CC01900007F586D /* OAuth2 in Frameworks */ = {isa = PBXBuildFile; productRef = 4923E5132CC01900007F586D /* OAuth2 */; };
+		4923E5172CC14CD3007F586D /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = 4923E5162CC14CD3007F586D /* Vapor */; };
 		499031E72A02EABA00E24FBE /* EffectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499031E62A02EABA00E24FBE /* EffectsView.swift */; };
 		499031E92A030E3600E24FBE /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499031E82A030E3600E24FBE /* NowPlayingView.swift */; };
 		499031EC2A068CCB00E24FBE /* Track+durationFormatted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499031EB2A068CCB00E24FBE /* Track+durationFormatted.swift */; };
@@ -106,6 +107,7 @@
 				4923E5142CC01900007F586D /* OAuth2 in Frameworks */,
 				490607AD2CBDD1D600ACC0A6 /* SystemConfiguration.framework in Frameworks */,
 				490107C729F9E40500A6CB20 /* CoreAudio.framework in Frameworks */,
+				4923E5172CC14CD3007F586D /* Vapor in Frameworks */,
 				490107AC29F9DA4700A6CB20 /* libspeck.a in Frameworks */,
 				490107C529F9E3FC00A6CB20 /* AudioUnit.framework in Frameworks */,
 				490107C929F9E40F00A6CB20 /* AudioToolbox.framework in Frameworks */,
@@ -285,6 +287,7 @@
 				49B0B98B29FD285A00404FF4 /* SpotifyAPI */,
 				49B0B99F2A01153300404FF4 /* SkeletonUI */,
 				4923E5132CC01900007F586D /* OAuth2 */,
+				4923E5162CC14CD3007F586D /* Vapor */,
 			);
 			productName = Speck;
 			productReference = 4901077829F9C32100A6CB20 /* Speck.app */;
@@ -363,6 +366,7 @@
 				49B0B98A29FD285A00404FF4 /* XCRemoteSwiftPackageReference "SpotifyAPI" */,
 				49B0B99E2A01153300404FF4 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				4923E5122CC01900007F586D /* XCRemoteSwiftPackageReference "OAuth2" */,
+				4923E5152CC14CD3007F586D /* XCRemoteSwiftPackageReference "vapor" */,
 			);
 			productRefGroup = 4901077929F9C32100A6CB20 /* Products */;
 			projectDirPath = "";
@@ -787,6 +791,14 @@
 				minimumVersion = 5.3.5;
 			};
 		};
+		4923E5152CC14CD3007F586D /* XCRemoteSwiftPackageReference "vapor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vapor/vapor";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.106.0;
+			};
+		};
 		49B0B98729FD282300404FF4 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
@@ -818,6 +830,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4923E5122CC01900007F586D /* XCRemoteSwiftPackageReference "OAuth2" */;
 			productName = OAuth2;
+		};
+		4923E5162CC14CD3007F586D /* Vapor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4923E5152CC14CD3007F586D /* XCRemoteSwiftPackageReference "vapor" */;
+			productName = Vapor;
 		};
 		49B0B98829FD282300404FF4 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

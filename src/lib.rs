@@ -188,9 +188,7 @@ mod ffi {
         #[swift_bridge(init)]
         fn new() -> SpeckCore;
 
-        async fn login(&mut self) -> LoginResult;
-
-        async fn get_token(&mut self) -> SpotifyToken;
+        async fn login(&mut self, access_token: String) -> LoginResult;
 
         async fn get_player_event(&mut self) -> PlayerEventResult;
 
@@ -415,32 +413,22 @@ impl SpeckCore {
         self.player.as_ref().unwrap().seek(position_ms);
     }
 
-    async fn login(&mut self) -> ffi::LoginResult {
+    async fn login(&mut self, access_token: String) -> ffi::LoginResult {
         let session_config = SessionConfig::default();
-        let mut cache_dir = env::temp_dir();
-        cache_dir.push("spotty-cache");
-
-        let cache = Cache::new(Some(cache_dir), None, None, None).unwrap();
-        let cached_credentials = cache.credentials();
-        let credentials = match cached_credentials {
-            Some(s) => s,
-            None => {
-                match librespot::oauth::get_access_token(
-                    CLIENT_ID,
-                    &"http://127.0.0.1:5588/login".to_string(),
-                    OAUTH_SCOPES.to_vec(),
-                ) {
-                    Ok(token) => Credentials::with_access_token(token.access_token),
-                    Err(err) => {
-                        return ffi::LoginResult {
-                            ok: false,
-                            message: err.to_string(),
-                        }
-                    }
-                }
-            }
-        };
-        let session = Session::new(session_config, Some(cache));
+        // let mut cache_dir = env::temp_dir();
+        // cache_dir.push("spotty-cache");
+        //
+        // let cache = Cache::new(Some(cache_dir), None, None, None).unwrap();
+        // let cached_credentials = cache.credentials();
+        // let credentials = match cached_credentials {
+        //     Some(s) => s,
+        //     None => Credentials::with_access_token(access_token),
+        // };
+        let credentials = Credentials::with_access_token(access_token);
+        let session = Session::new(
+            session_config,
+            None, // Some(cache)
+        );
         let res = session.connect(credentials, true).await;
 
         match res {
