@@ -45,7 +45,10 @@ let OAUTH_SCOPES = [
 
 final class Spotify: ObservableObject {
     @Published var player: Player?
+    
     private var core = SpeckCore()
+    
+    static let shared = Spotify()
     
     /// The key in the keychain that is used to store the authorization
     /// information: "authorizationManager".
@@ -79,7 +82,7 @@ final class Spotify: ObservableObject {
     @Published var isAuthorized = false
     
     /// The keychain to store the authorization information in.
-    private let keychain = Keychain(service: "io.jari.Speck-spotify")
+    private let keychain = Keychain(service: "io.jari.Speck").accessibility(.whenUnlocked)
     
     /// An instance of `SpotifyAPI` that you use to make requests to the Spotify
     /// web API.
@@ -189,15 +192,21 @@ final class Spotify: ObservableObject {
      using `requestAccessAndRefreshTokens(redirectURIWithQuery:state:)`.
      */
     func authorizationManagerDidChange() {
-        Task {
-            // TODO do something with error!
-            await self.core.login(api.authorizationManager.accessToken!)
-            // TODO background thread updates ardgfr;dg[fd
-            self.player = Player(core: core, api: api)
+        let isExpired = self.api.authorizationManager.accessTokenIsExpired()
+
+        if isExpired {
+            // manually refresh token if it's expired because our core needs a fresh one
+            self.api.authorizationManager.refreshTokens(onlyIfExpired: true)
+                .receive(on: RunLoop.main)
+                .sink(receiveCompletion: { result in
+                    // todo do something with error
+                    self.authorizationManagerDidChange()
+                })
+                .store(in: &cancellables)
         }
-        
+
         // Update the @Published `isAuthorized` property.
-        self.isAuthorized = self.api.authorizationManager.isAuthorized()
+        self.isAuthorized = !isExpired && self.api.authorizationManager.isAuthorized()
         
         do {
             // Encode the authorization information to data.
@@ -213,6 +222,14 @@ final class Spotify: ObservableObject {
             )
         }
         
+        if self.isAuthorized && !isExpired && self.player == nil {
+            Task {
+//                 TODO do something with error!
+                await self.core.login(api.authorizationManager.accessToken!)
+                // TODO background thread updates ardgfr;dg[fd
+                self.player = Player(core: core, api: api)
+            }
+        }
     }
     
     /**
@@ -258,7 +275,6 @@ final class Spotify: ObservableObject {
                    return Response(status: .badRequest)
                }
 
-               // Shutdown the server and resume the continuation with the received URL
                DispatchQueue.main.async {
                    app.server.shutdown()
                    continuation.resume(returning: url)

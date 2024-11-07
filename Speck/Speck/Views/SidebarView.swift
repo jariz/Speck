@@ -6,25 +6,25 @@
 //
 
 import SwiftUI
+import SpotifyWebAPI
 
 struct SidebarView: View {
-    @Binding var selection: DetailPage?
+    @EnvironmentObject var navigation: Navigation
 
     var body: some View {
-        List(selection: $selection) {
+
+        List (selection: $navigation.firstPage) {
             NavigationLink(value: DetailPage.savedTracks) {
                 Label("Saved Tracks", systemImage: "music.note.list")
             }
             NavigationLink(value: DetailPage.library) {
                 Label("Library", systemImage: "books.vertical")
             }
+            SidebarPlaylistsView()
         }
+//        .onChange(of: selectedPage, { oldValue, newValue in
+//            navigation.replace(newValue)
+//        })
         .frame(minWidth: 250)
-    }
-}
-
-struct SidebarView_Previews: PreviewProvider {
-    static var previews: some View {
-        SidebarView(selection: .constant(.savedTracks))
     }
 }

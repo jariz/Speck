@@ -6,43 +6,41 @@
 //
 
 import Combine
-import SpotifyWebAPI
 import SwiftUI
+import Inject
+import SpotifyWebAPI
 
-enum DetailPage {
-    case savedTracks
-    case library
-}
 
 struct ContentView: View {
-    @EnvironmentObject var spotify: Spotify
-    @State private var selection: DetailPage? = .savedTracks
-
+    @ObservedObject var spotify = Spotify.shared
+    @StateObject var navigation = Navigation.shared
+    
     var body: some View {
-        NavigationSplitView {
-            SidebarView(selection: $selection)
-        } detail: {
-            NavigationStack {
-                VStack {
-                    if selection == .savedTracks {
-                        SavedTracksView()
-                    }
-
-                    if let player = spotify.player {
-                        PlayerView()
-                            .environmentObject(player)
-                            .transition(.slide)
-                    }
-                }
+            NavigationSplitView {
+                SidebarView()
             }
+            detail: {
+                NavigatorView()
+
+            }
+            .environmentObject(navigation)
+            .sheet(
+                isPresented: !$spotify.isAuthorized,
+                content: {
+                    LoginView()
+                        .environmentObject(spotify)
+                })
+            .enableInjection()
+
+        
+        if let player = spotify.player {
+            PlayerView()
+                .environmentObject(player)
+                .transition(.slide)
         }
-        .sheet(
-            isPresented: !$spotify.isAuthorized,
-            content: {
-                LoginView()
-                    .environmentObject(spotify)
-            })
     }
+    
+    @ObserveInjection var inject
 }
 
 prefix func ! (value: Binding<Bool>) -> Binding<Bool> {
@@ -50,10 +48,4 @@ prefix func ! (value: Binding<Bool>) -> Binding<Bool> {
         get: { !value.wrappedValue },
         set: { value.wrappedValue = !$0 }
     )
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
 }

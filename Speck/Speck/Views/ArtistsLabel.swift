@@ -13,14 +13,18 @@ extension Artist: Identifiable {
 
 struct ArtistsLabel: View {
     var artists: [Artist]?
+    @EnvironmentObject var navigationModel: Navigation
 
     var body: some View {
         HStack(spacing: 0) {
             ForEach(artists ?? []) { artist in
-                NavigationLink(artist.name) {
-                    ArtistView(artist: artist)
+                Button {
+                    navigationModel.path.append(.artist(artist))
+                } label: {
+                    Text(artist.name)
                 }
                 .buttonStyle(.plain)
+                
                 if artists?.last?.id != artist.id {
                     Text(", ")
                 }

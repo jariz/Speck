@@ -7,13 +7,13 @@
 
 import SpotifyWebAPI
 import SwiftUI
+import Inject
 
 @main
 struct SpeckApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(Spotify())
         }
     }
 }

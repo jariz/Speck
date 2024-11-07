@@ -11,7 +11,7 @@ import Combine
 
 struct ArtistView: View {
     @State var artist: Artist
-    @EnvironmentObject var spotify: Spotify
+    @ObservedObject var spotify = Spotify.shared
     
     @State private var artistInfoCancellable: AnyCancellable? = nil
     
@@ -47,7 +47,6 @@ struct ArtistView: View {
                     .clipShape(Circle())
                     .frame(width: 32, height: 32)
                 }
-                
             }
     }
 }

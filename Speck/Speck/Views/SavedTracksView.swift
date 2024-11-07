@@ -15,7 +15,7 @@ extension SavedTrack: Identifiable {
 
 struct SavedTracksView: View {
     @State private var searchCancellable: AnyCancellable? = nil
-    @EnvironmentObject var spotify: Spotify
+    @ObservedObject var spotify = Spotify.shared
 
     @State private var items: [SavedTrack] = []
     @State private var itemCount: Int?
@@ -92,6 +92,11 @@ struct SavedTracksView: View {
         .navigationTitle("Saved tracks")
         .navigationSubtitle(Text("\(itemCount ?? 0) total"))
         .onChange(of: spotify.isAuthorized) {
+            if spotify.isAuthorized {
+                fetchMore()
+            }
+        }
+        .onAppear() {
             if spotify.isAuthorized {
                 fetchMore()
             }

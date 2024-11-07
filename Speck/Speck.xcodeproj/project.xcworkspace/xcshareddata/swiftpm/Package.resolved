@@ -1,5 +1,5 @@
 {
-  "originHash" : "afe4d3f6247c06ea7ee30e0b2a527a37d26513e609403010a9add1f1ce560d3a",
+  "originHash" : "ca7975caa911db7ffeba63dc356320ba023fbf8a86e5b3bd6ed40879085c284a",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -29,6 +29,15 @@
       }
     },
     {
+      "identity" : "inject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzysztofzablocki/Inject.git",
+      "state" : {
+        "revision" : "728c56639ecb3df441d51d5bc6747329afabcfc9",
+        "version" : "1.5.2"
+      }
+    },
+    {
       "identity" : "keychainaccess",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kishikawakatsumi/KeychainAccess.git",
@@ -53,6 +62,15 @@
       "state" : {
         "revision" : "8576f0d579b27020beccbccc3ea6844f3ddfc2c2",
         "version" : "0.14.0"
+      }
+    },
+    {
+      "identity" : "pigeon",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/fmo91/Pigeon",
+      "state" : {
+        "revision" : "18c29b2cf1735afd5ef33bb1e983cbed9932c313",
+        "version" : "0.1.17"
       }
     },
     {

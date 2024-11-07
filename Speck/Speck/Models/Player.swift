@@ -56,6 +56,7 @@ final class Player: ObservableObject {
                 if state == .playing {
                     self.positionTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
                         timer in
+                        // TODO why aren't we querying core????
                         self.positionMS += 1000
                     }
                 }
