@@ -1,0 +1,46 @@
+name: Xcode - Build and Analyze
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: Build and analyse default scheme using xcodebuild command
+    runs-on: macos-latest
+    
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: rustup toolchain install
+        # You may pin to the exact commit or the version.
+        # uses: dtolnay/rust-toolchain@1482605bfc5719782e1267fd0c0cc350fe7646b8
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          # Rust toolchain specification -- see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification
+          toolchain: 1.27.0
+          # # Comma-separated list of target triples to install for this toolchain
+          # targets: # optional
+          # # Alias for `targets`
+          # target: # optional
+          # Comma-separated list of components to be additionally installed
+          # components: # optional
+      - name: Set Default Scheme
+        working-directory: Speck/
+        run: |
+          scheme_list=$(xcodebuild -list -json | tr -d "\n")
+          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
+          echo $default | cat >default
+          echo Using default scheme: $default
+      - name: Build
+        working-directory: Speck/
+        env:
+          scheme: ${{ 'default' }}
+        run: |
+          if [ $scheme = default ]; then scheme=$(cat default); fi
+          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
+          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
+          xcodebuild clean build analyze -scheme "$scheme" -"$filetype_parameter" "$file_to_build" | xcpretty && exit ${PIPESTATUS[0]}
