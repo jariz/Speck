@@ -46,7 +46,7 @@ let OAUTH_SCOPES = [
 final class Spotify: ObservableObject {
     @Published var player: Player?
     
-    private var core = SpeckCore()
+//    public var privateApis: PrivateApis;
     
     static let shared = Spotify()
     
@@ -225,9 +225,9 @@ final class Spotify: ObservableObject {
         if self.isAuthorized && !isExpired && self.player == nil {
             Task {
 //                 TODO do something with error!
-                await self.core.login(api.authorizationManager.accessToken!)
+                await SpeckCore.shared.login(api.authorizationManager.accessToken!)
                 // TODO background thread updates ardgfr;dg[fd
-                self.player = Player(core: core, api: api)
+                self.player = Player(api: api)
             }
         }
     }

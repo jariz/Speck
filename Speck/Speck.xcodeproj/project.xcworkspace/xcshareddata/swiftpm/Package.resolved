@@ -1,5 +1,5 @@
 {
-  "originHash" : "ca7975caa911db7ffeba63dc356320ba023fbf8a86e5b3bd6ed40879085c284a",
+  "originHash" : "5bd1f6d5d40db24a1eaadf573a28adb16041058166324fe3e2f19f96f4af22f7",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -62,15 +62,6 @@
       "state" : {
         "revision" : "8576f0d579b27020beccbccc3ea6844f3ddfc2c2",
         "version" : "0.14.0"
-      }
-    },
-    {
-      "identity" : "pigeon",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/fmo91/Pigeon",
-      "state" : {
-        "revision" : "18c29b2cf1735afd5ef33bb1e983cbed9932c313",
-        "version" : "0.1.17"
       }
     },
     {

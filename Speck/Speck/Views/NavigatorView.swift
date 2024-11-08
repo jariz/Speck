@@ -31,8 +31,8 @@ struct NavigatorView: View {
     var body: some View {
         activeView
             .toolbar {
-                ToolbarItem(placement: .navigation) {
-                    if navigation.path.count > 1 {
+                if navigation.path.count > 1 {
+                    ToolbarItem(placement: .navigation) {
                         Button {
                             navigation.pop()
                         } label: {

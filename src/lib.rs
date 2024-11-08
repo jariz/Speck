@@ -1,11 +1,12 @@
 use env_logger::Env;
 use librespot::core::spotify_id::{SpotifyId, SpotifyItemType};
-use librespot::metadata::{Artist, Metadata};
+use librespot::metadata::lyrics::SyncType;
+use librespot::metadata::{Artist, Lyrics, Metadata};
 use librespot::playback::audio_backend;
 use librespot::playback::config::AudioFormat;
 use librespot::playback::player::{PlayerEvent, PlayerEventChannel};
 use librespot::{
-    core::{cache::Cache, config::SessionConfig, session::Session},
+    core::{config::SessionConfig, session::Session},
     discovery::Credentials,
     playback::{
         config::PlayerConfig,
@@ -14,51 +15,7 @@ use librespot::{
     },
 };
 use log::debug;
-use std::env;
 use std::sync::Arc;
-
-const CLIENT_ID: &str = "65b708073fc0480ea92a077233ca87bd";
-static OAUTH_SCOPES: &[&str] = &[
-    "app-remote-control",
-    "playlist-modify",
-    "playlist-modify-private",
-    "playlist-modify-public",
-    "playlist-read",
-    "playlist-read-collaborative",
-    "playlist-read-private",
-    "streaming",
-    "ugc-image-upload",
-    "user-follow-modify",
-    "user-follow-read",
-    "user-library-modify",
-    "user-library-read",
-    "user-modify",
-    "user-modify-playback-state",
-    "user-modify-private",
-    "user-personalized",
-    "user-read-birthdate",
-    "user-read-currently-playing",
-    "user-read-email",
-    "user-read-play-history",
-    "user-read-playback-position",
-    "user-read-playback-state",
-    "user-read-private",
-    "user-read-recently-played",
-    "user-top-read",
-];
-const SCOPES: &str = "user-read-private,\
-playlist-read-private,\
-playlist-read-collaborative,\
-user-library-read,\
-user-library-modify,\
-user-top-read,\
-user-read-recently-played,\
-user-read-playback-state,\
-playlist-modify-public,\
-playlist-modify-private,\
-user-modify-playback-state,\
-streaming,\
-playlist-modify-public";
 
 #[swift_bridge::bridge]
 mod ffi {
@@ -66,12 +23,6 @@ mod ffi {
     struct LoginResult {
         ok: bool,
         message: String,
-    }
-
-    #[swift_bridge(swift_repr = "struct")]
-    struct SpotifyToken {
-        access_token: String,
-        expires_in: u64,
     }
 
     // This is basically a redefinition of librespot's PlayerEvent beacuse of ✨ bridge reasons ✨
@@ -181,6 +132,26 @@ mod ffi {
     struct PlayerEventResult {
         event: SpeckPlayerEvent,
     }
+    #[swift_bridge(swift_repr = "struct")]
+    struct Lyrics {
+        lines: Vec<String>,
+
+        pub provider: String,
+        pub provider_display_name: String,
+        // pub sync_type: SyncType,
+    }
+
+    #[swift_bridge(swift_repr = "struct")]
+    pub struct Line {
+        pub start_time_ms: String,
+        pub end_time_ms: String,
+        pub words: String,
+    }
+
+    pub enum SyncType {
+        Unsynced,
+        LineSynced,
+    }
 
     extern "Rust" {
         type SpeckCore;
@@ -198,6 +169,8 @@ mod ffi {
         fn player_pause(&self);
         fn player_play(&self);
         fn player_seek(&self, position_ms: u32);
+
+        async fn get_lyrics(&self, track_id: String) -> Lyrics;
     }
 }
 
@@ -219,20 +192,6 @@ impl SpeckCore {
             player: None,
             channel: None,
         }
-    }
-
-    async fn get_token(&mut self) -> ffi::SpotifyToken {
-        let session = self.session.as_ref().unwrap();
-
-        session
-            .token_provider()
-            .get_token(SCOPES)
-            .await
-            .map(|token| ffi::SpotifyToken {
-                access_token: token.access_token,
-                expires_in: token.expires_in.as_secs(),
-            })
-            .unwrap() // TODO I can't use Result<> in async because of bridge reasons but come on, improve pls...
     }
 
     fn init_player(&mut self) {
@@ -386,13 +345,31 @@ impl SpeckCore {
         }
     }
 
-    async fn get_expanded_artist_info(&self, track_id: String) {
+    // async fn get_expanded_artist_info(&self, track_id: String) {
+    //     let mut id = SpotifyId::from_base62(&track_id).unwrap();
+    //     id.item_type = SpotifyItemType::Track;
+    //     let artist = Artist::get(self.session.as_ref().unwrap(), &id)
+    //         .await
+    //         .unwrap();
+    //     artist.portraits;
+    // }
+
+    async fn get_lyrics(&self, track_id: String) -> ffi::Lyrics {
         let mut id = SpotifyId::from_base62(&track_id).unwrap();
         id.item_type = SpotifyItemType::Track;
-        let artist = Artist::get(self.session.as_ref().unwrap(), &id)
+        let metadata = Lyrics::get(self.session.as_ref().unwrap(), &id)
             .await
             .unwrap();
-        artist.portraits;
+        let lyrics = metadata.lyrics;
+        return ffi::Lyrics {
+            lines: lyrics.lines.iter().map(|line| line.words.clone()).collect(),
+            provider: lyrics.provider,
+            provider_display_name: lyrics.provider_display_name,
+            // sync_type: match lyrics.sync_type {
+            //     SyncType::Unsynced => ffi::SyncType::Unsynced,
+            //     SyncType::LineSynced => ffi::SyncType::LineSynced,
+            // },
+        };
     }
 
     fn player_load_track(&mut self, track_id: String) {

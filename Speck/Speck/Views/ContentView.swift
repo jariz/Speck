@@ -13,15 +13,15 @@ import SpotifyWebAPI
 
 struct ContentView: View {
     @ObservedObject var spotify = Spotify.shared
-    @StateObject var navigation = Navigation.shared
+    @ObservedObject var navigation = Navigation.shared
     
     var body: some View {
+        HStack {
             NavigationSplitView {
                 SidebarView()
             }
             detail: {
                 NavigatorView()
-
             }
             .environmentObject(navigation)
             .sheet(
@@ -31,7 +31,12 @@ struct ContentView: View {
                         .environmentObject(spotify)
                 })
             .enableInjection()
-
+            
+            if let player = spotify.player {
+                LyricsView()
+                    .environmentObject(player)
+            }
+        }
         
         if let player = spotify.player {
             PlayerView()

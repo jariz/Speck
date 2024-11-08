@@ -22,7 +22,6 @@
 		490607AD2CBDD1D600ACC0A6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 490607AC2CBDD1D600ACC0A6 /* SystemConfiguration.framework */; };
 		4923E5172CC14CD3007F586D /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = 4923E5162CC14CD3007F586D /* Vapor */; };
 		497DBF3D2CC7FF3E0034FA71 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = 497DBF3C2CC7FF3E0034FA71 /* Inject */; };
-		497DBF492CCADAB90034FA71 /* Pigeon in Frameworks */ = {isa = PBXBuildFile; productRef = 497DBF482CCADAB90034FA71 /* Pigeon */; };
 		49B0B98929FD282300404FF4 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 49B0B98829FD282300404FF4 /* KeychainAccess */; };
 		49B0B98C29FD285A00404FF4 /* SpotifyAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 49B0B98B29FD285A00404FF4 /* SpotifyAPI */; };
 		49B0B9A02A01153300404FF4 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 49B0B99F2A01153300404FF4 /* SkeletonUI */; };
@@ -88,7 +87,6 @@
 				497DBF3D2CC7FF3E0034FA71 /* Inject in Frameworks */,
 				490107C929F9E40F00A6CB20 /* AudioToolbox.framework in Frameworks */,
 				49B0B9A02A01153300404FF4 /* SkeletonUI in Frameworks */,
-				497DBF492CCADAB90034FA71 /* Pigeon in Frameworks */,
 				49B0B98C29FD285A00404FF4 /* SpotifyAPI in Frameworks */,
 				49B0B98929FD282300404FF4 /* KeychainAccess in Frameworks */,
 			);
@@ -219,7 +217,6 @@
 				49B0B99F2A01153300404FF4 /* SkeletonUI */,
 				4923E5162CC14CD3007F586D /* Vapor */,
 				497DBF3C2CC7FF3E0034FA71 /* Inject */,
-				497DBF482CCADAB90034FA71 /* Pigeon */,
 			);
 			productName = Speck;
 			productReference = 4901077829F9C32100A6CB20 /* Speck.app */;
@@ -299,7 +296,6 @@
 				49B0B99E2A01153300404FF4 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				4923E5152CC14CD3007F586D /* XCRemoteSwiftPackageReference "vapor" */,
 				497DBF3B2CC7FF3E0034FA71 /* XCRemoteSwiftPackageReference "Inject" */,
-				497DBF472CCADAB90034FA71 /* XCRemoteSwiftPackageReference "Pigeon" */,
 			);
 			productRefGroup = 4901077929F9C32100A6CB20 /* Products */;
 			projectDirPath = "";
@@ -722,14 +718,6 @@
 				minimumVersion = 1.5.2;
 			};
 		};
-		497DBF472CCADAB90034FA71 /* XCRemoteSwiftPackageReference "Pigeon" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/fmo91/Pigeon";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.17;
-			};
-		};
 		49B0B98729FD282300404FF4 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
@@ -766,11 +754,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 497DBF3B2CC7FF3E0034FA71 /* XCRemoteSwiftPackageReference "Inject" */;
 			productName = Inject;
-		};
-		497DBF482CCADAB90034FA71 /* Pigeon */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 497DBF472CCADAB90034FA71 /* XCRemoteSwiftPackageReference "Pigeon" */;
-			productName = Pigeon;
 		};
 		49B0B98829FD282300404FF4 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

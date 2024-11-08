@@ -12,7 +12,9 @@ swift-bridge-build = "0.1"
 crate-type = ["staticlib"]
 
 [dependencies]
-swift-bridge = {version = "0.1", features = ["async"]}
+swift-bridge = { version = "0.1", features = ["async"] }
 librespot = { git = "https://github.com/librespot-org/librespot.git", branch = "dev" }
 env_logger = "0.10.0"
 log = "0.4.17"
+serde = "1.0.214"
+

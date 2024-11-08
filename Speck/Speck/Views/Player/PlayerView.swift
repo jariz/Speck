@@ -24,11 +24,6 @@ struct PlayerView: View {
         )
 
         VStack(alignment: .leading, spacing: 0) {
-            if player.durationMS > 0 {
-                Slider(value: positionMS, in: 0...Double(player.durationMS))
-                    .offset(y: -12)
-            }
-
             ZStack(alignment: .center) {
                 if let track = player.track {
                     NowPlayingView(track: track)
@@ -76,14 +71,22 @@ struct PlayerView: View {
                     .frame(maxWidth: .infinity)
                 }
             }
-            .padding(EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10))
+            .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         }
         .background(
             EffectsView(
-                material: NSVisualEffectView.Material.sidebar,
+                material: NSVisualEffectView.Material.popover,
                 blendingMode: NSVisualEffectView.BlendingMode.behindWindow)
         )
         .frame(maxWidth: .infinity)
+        .overlay(alignment: .top) {
+            if player.durationMS > 0 {
+                Slider(value: positionMS, in: 0...Double(player.durationMS))
+                    .frame(maxWidth: .infinity)
+                    .offset(y: -12)
+                    
+            }
+        }
 
     }
 }
