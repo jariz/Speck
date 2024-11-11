@@ -227,7 +227,9 @@ final class Spotify: ObservableObject {
 //                 TODO do something with error!
                 await SpeckCore.shared.login(api.authorizationManager.accessToken!)
                 // TODO background thread updates ardgfr;dg[fd
-                self.player = Player(api: api)
+                DispatchQueue.main.async {
+                    self.player = Player(api: self.api)
+                }
             }
         }
     }

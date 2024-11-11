@@ -22,15 +22,16 @@ struct LyricsView: View {
                         Text(line.toString())
                             .font(.title2)
                             .bold()
-//                            .foregroundStyle(.regularMaterial)
+//                            .foregroundColor(Color(argb: lyrics?.color_text ?? 0))
                     }
                 }
             }
             .padding(18)
-            .frame(width: showRight ? 300 : 0)
+            .frame(maxWidth: .infinity)
         }
         .frame(maxHeight: .infinity)
         .frame(width: showRight ? 300 : 0)
+        .background((self.lyrics.map { Color(argb: $0.color_background) } ?? .clear).opacity(0.25))
         .background(
             EffectsView(
                 material: NSVisualEffectView.Material.sidebar,

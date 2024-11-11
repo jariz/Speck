@@ -65,66 +65,69 @@ final class Player: ObservableObject {
     }
 
     private func startPlayerThread() {
-        Task(priority: .background) {
+        Task {
             while true {
                 let result = await self.core.get_player_event()
 
                 let type = result.event
 
-                switch type {
-                case .Stopped(_, let track_id):
-                    playState = .stopped
-                    getTrackInfo(id: track_id.toString())
-                    positionMS = 0
-                    durationMS = 0
-                case .TrackChanged(let track_id, let durationMs):
-                    getTrackInfo(id: track_id.toString())
-                    self.durationMS = durationMs
-                case .Loading(let play_request_id, let track_id, let position_ms):
-                    getTrackInfo(id: track_id.toString())
-                    positionMS = position_ms
-                case .Preloading(let track_id):
-                    getTrackInfo(id: track_id.toString())
-                case .Playing(_, let track_id, let position_ms):
-                    playState = .playing
-                    getTrackInfo(id: track_id.toString())
-                    positionMS = position_ms
-                case .Paused(_, let track_id, let position_ms):
-                    playState = .paused
-                    getTrackInfo(id: track_id.toString())
-                    positionMS = position_ms
-                case .TimeToPreloadNextTrack(play_request_id: let play_request_id, track_id: let track_id):
-                    print("NOTIMPL .TimeToPreloadNextTrack")
-                case .EndOfTrack(play_request_id: let play_request_id, track_id: let track_id):
-                    print("NOTIMPL .EndOfTrack")
-                case .Unavailable(play_request_id: let play_request_id, track_id: let track_id):
-                    print("NOTIMPL .Unavailable")
-                case .VolumeChanged(volume: let volume):
-                    print("NOTIMPL .VolumeChanged")
-                case .PositionCorrection(_, track_id: let trackId, position_ms: let positionMS):
-                    getTrackInfo(id: trackId.toString());
-                    self.positionMS = positionMS
-                case .Seeked(_, track_id: let trackId, position_ms: let positionMS):
-                    getTrackInfo(id: trackId.toString())
-                    self.positionMS = positionMS
-                case .SessionConnected(connection_id: let connection_id, user_name: let user_name):
-                    print("NOTIMPL .SessionConnected")
-                case .SessionDisconnected(connection_id: let connection_id, user_name: let user_name):
-                    print("NOTIMPL .SessionDisconnected")
-                case .SessionClientChanged(client_id: let client_id, client_name: let client_name, client_brand_name: let client_brand_name, client_model_name: let client_model_name):
-                    print("NOTIMPL .SessionClientChanged")
-                case .ShuffleChanged(shuffle: let shuffle):
-                    print("NOTIMPL .ShuffleChanged")
-                case .RepeatChanged(enable_repeat: let enable_repeat):
-                    print("NOTIMPL RepeatChanged")
-                case .AutoPlayChanged(auto_play: let auto_play):
-                    print("NOTIMPL AutoPlayChanged")
-                case .FilterExplicitContentChanged(filter: let filter):
-                    print("NOTIMPL .FilterExplicitContentChanged")
-                case .PlayRequestIdChanged(play_request_id: let play_request_id):
-                    print("NOTIMPL .PlayRequestIdChanged")
+                DispatchQueue.main.async { [self] in
+                    switch type {
+                    case .Stopped(_, let track_id):
+                        playState = .stopped
+                        getTrackInfo(id: track_id.toString())
+                        positionMS = 0
+                        durationMS = 0
+                    case .TrackChanged(let track_id, let durationMs):
+                        getTrackInfo(id: track_id.toString())
+                        self.durationMS = durationMs
+                    case .Loading(let play_request_id, let track_id, let position_ms):
+                        getTrackInfo(id: track_id.toString())
+                        positionMS = position_ms
+                    case .Preloading(let track_id):
+                        getTrackInfo(id: track_id.toString())
+                    case .Playing(_, let track_id, let position_ms):
+                        playState = .playing
+                        getTrackInfo(id: track_id.toString())
+                        positionMS = position_ms
+                    case .Paused(_, let track_id, let position_ms):
+                        playState = .paused
+                        getTrackInfo(id: track_id.toString())
+                        positionMS = position_ms
+                    case .TimeToPreloadNextTrack(play_request_id: let play_request_id, track_id: let track_id):
+                        print("NOTIMPL .TimeToPreloadNextTrack")
+                    case .EndOfTrack(play_request_id: let play_request_id, track_id: let track_id):
+                        print("NOTIMPL .EndOfTrack")
+                    case .Unavailable(play_request_id: let play_request_id, track_id: let track_id):
+                        print("NOTIMPL .Unavailable")
+                    case .VolumeChanged(volume: let volume):
+                        print("NOTIMPL .VolumeChanged")
+                    case .PositionCorrection(_, track_id: let trackId, position_ms: let positionMS):
+                        getTrackInfo(id: trackId.toString());
+                        self.positionMS = positionMS
+                    case .Seeked(_, track_id: let trackId, position_ms: let positionMS):
+                        getTrackInfo(id: trackId.toString())
+                        self.positionMS = positionMS
+                    case .SessionConnected(connection_id: let connection_id, user_name: let user_name):
+                        print("NOTIMPL .SessionConnected")
+                    case .SessionDisconnected(connection_id: let connection_id, user_name: let user_name):
+                        print("NOTIMPL .SessionDisconnected")
+                    case .SessionClientChanged(client_id: let client_id, client_name: let client_name, client_brand_name: let client_brand_name, client_model_name: let client_model_name):
+                        print("NOTIMPL .SessionClientChanged")
+                    case .ShuffleChanged(shuffle: let shuffle):
+                        print("NOTIMPL .ShuffleChanged")
+                    case .RepeatChanged(enable_repeat: let enable_repeat):
+                        print("NOTIMPL RepeatChanged")
+                    case .AutoPlayChanged(auto_play: let auto_play):
+                        print("NOTIMPL AutoPlayChanged")
+                    case .FilterExplicitContentChanged(filter: let filter):
+                        print("NOTIMPL .FilterExplicitContentChanged")
+                    case .PlayRequestIdChanged(play_request_id: let play_request_id):
+                        print("NOTIMPL .PlayRequestIdChanged")
+                    }
+                    
                 }
-
+                
                 print(playState)
             }
         }

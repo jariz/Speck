@@ -138,7 +138,11 @@ mod ffi {
 
         pub provider: String,
         pub provider_display_name: String,
+        pub is_synced: bool,
         // pub sync_type: SyncType,
+        pub color_background: i32,
+        pub color_highlight_text: i32,
+        pub color_text: i32,
     }
 
     #[swift_bridge(swift_repr = "struct")]
@@ -365,10 +369,10 @@ impl SpeckCore {
             lines: lyrics.lines.iter().map(|line| line.words.clone()).collect(),
             provider: lyrics.provider,
             provider_display_name: lyrics.provider_display_name,
-            // sync_type: match lyrics.sync_type {
-            //     SyncType::Unsynced => ffi::SyncType::Unsynced,
-            //     SyncType::LineSynced => ffi::SyncType::LineSynced,
-            // },
+            is_synced: lyrics.sync_type == SyncType::LineSynced,
+            color_background: metadata.colors.background,
+            color_highlight_text: metadata.colors.highlight_text,
+            color_text: metadata.colors.text,
         };
     }
 
