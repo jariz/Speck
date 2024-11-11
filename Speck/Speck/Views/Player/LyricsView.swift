@@ -27,7 +27,8 @@ struct LyricsView: View {
                 }
             }
             .padding(18)
-            .frame(maxWidth: .infinity)
+            .frame(minWidth: 300)
+            .opacity(showRight ? 1 : 0)
         }
         .frame(maxHeight: .infinity)
         .frame(width: showRight ? 300 : 0)
@@ -51,12 +52,14 @@ struct LyricsView: View {
         .onChange(of: player.track) { oldValue, newValue in
             if let track = newValue {
                 Task {
-                    let lyrics = await Lyrics.from(track)
-                    withAnimation {
-                        self.lyrics = lyrics
+                    do {
+                        let lyrics = try await Lyrics.from(track)
+                        withAnimation {
+                            self.lyrics = lyrics
+                        }
+                    } catch {
+                        debugPrint("unable to fetch lyrics: \(error)")
                     }
-                    
-                    debugPrint(lyrics)
                 }
             }
         }

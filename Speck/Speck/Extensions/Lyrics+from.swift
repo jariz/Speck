@@ -7,11 +7,11 @@
 import SpotifyWebAPI
 
 extension Lyrics {
-    static func from(_ track: Track) async -> Lyrics? {
+    static func from(_ track: Track) async throws -> Lyrics? {
         guard let trackId = track.id else {
             return nil
         }
         
-        return await SpeckCore.shared.get_lyrics(trackId)
+        return try await SpeckCore.shared.get_lyrics(trackId)
     }
 }

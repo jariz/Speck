@@ -20,8 +20,7 @@ use std::sync::Arc;
 #[swift_bridge::bridge]
 mod ffi {
     #[swift_bridge(swift_repr = "struct")]
-    struct LoginResult {
-        ok: bool,
+    struct CoreError {
         message: String,
     }
 
@@ -163,7 +162,7 @@ mod ffi {
         #[swift_bridge(init)]
         fn new() -> SpeckCore;
 
-        async fn login(&mut self, access_token: String) -> LoginResult;
+        async fn login(&mut self, access_token: String) -> Result<(), CoreError>;
 
         async fn get_player_event(&mut self) -> PlayerEventResult;
 
@@ -174,7 +173,7 @@ mod ffi {
         fn player_play(&self);
         fn player_seek(&self, position_ms: u32);
 
-        async fn get_lyrics(&self, track_id: String) -> Lyrics;
+        async fn get_lyrics(&self, track_id: String) -> Result<Lyrics, CoreError>;
     }
 }
 
@@ -358,14 +357,26 @@ impl SpeckCore {
     //     artist.portraits;
     // }
 
-    async fn get_lyrics(&self, track_id: String) -> ffi::Lyrics {
-        let mut id = SpotifyId::from_base62(&track_id).unwrap();
+    async fn get_lyrics(&self, track_id: String) -> Result<ffi::Lyrics, ffi::CoreError> {
+        let mut id = SpotifyId::from_base62(&track_id).map_err(|_| ffi::CoreError {
+            message: "Invalid track id".to_string(),
+        })?;
+
         id.item_type = SpotifyItemType::Track;
-        let metadata = Lyrics::get(self.session.as_ref().unwrap(), &id)
-            .await
-            .unwrap();
+        debug!("getting lyrics for track: {:?}", id);
+        let metadata = Lyrics::get(
+            self.session.as_ref().ok_or(ffi::CoreError {
+                message: "No session active".to_string(),
+            })?,
+            &id,
+        )
+        .await
+        .map_err(|err| ffi::CoreError {
+            message: format!("{:?}", err),
+        })?;
+        debug!("got metadata: {:?}", metadata);
         let lyrics = metadata.lyrics;
-        return ffi::Lyrics {
+        Ok(ffi::Lyrics {
             lines: lyrics.lines.iter().map(|line| line.words.clone()).collect(),
             provider: lyrics.provider,
             provider_display_name: lyrics.provider_display_name,
@@ -373,7 +384,7 @@ impl SpeckCore {
             color_background: metadata.colors.background,
             color_highlight_text: metadata.colors.highlight_text,
             color_text: metadata.colors.text,
-        };
+        })
     }
 
     fn player_load_track(&mut self, track_id: String) {
@@ -394,7 +405,7 @@ impl SpeckCore {
         self.player.as_ref().unwrap().seek(position_ms);
     }
 
-    async fn login(&mut self, access_token: String) -> ffi::LoginResult {
+    async fn login(&mut self, access_token: String) -> Result<(), ffi::CoreError> {
         let session_config = SessionConfig::default();
         // let mut cache_dir = env::temp_dir();
         // cache_dir.push("spotty-cache");
@@ -406,25 +417,15 @@ impl SpeckCore {
         //     None => Credentials::with_access_token(access_token),
         // };
         let credentials = Credentials::with_access_token(access_token);
-        let session = Session::new(
-            session_config,
-            None, // Some(cache)
-        );
-        let res = session.connect(credentials, true).await;
+        let session = Session::new(session_config, None);
+        session
+            .connect(credentials, false)
+            .await
+            .map_err(|err| ffi::CoreError {
+                message: format!("{:?}", err),
+            })?;
 
-        match res {
-            Ok(_) => {
-                self.session = Some(session);
-                ffi::LoginResult {
-                    ok: true,
-                    message: "".to_string(),
-                }
-            }
-            // Err(err) => Err(format!("{:?}", err)),
-            Err(err) => ffi::LoginResult {
-                ok: false,
-                message: err.to_string(),
-            },
-        }
+        self.session = Some(session);
+        Ok(())
     }
 }

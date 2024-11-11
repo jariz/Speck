@@ -81,6 +81,8 @@ final class Spotify: ObservableObject {
      */
     @Published var isAuthorized = false
     
+    @Published var isLoggingIn = false
+    
     /// The keychain to store the authorization information in.
     private let keychain = Keychain(service: "io.jari.Speck").accessibility(.whenUnlocked)
     
@@ -222,14 +224,22 @@ final class Spotify: ObservableObject {
             )
         }
         
-        if self.isAuthorized && !isExpired && self.player == nil {
+        if self.isAuthorized && !isExpired && self.player == nil && !self.isLoggingIn {
             Task {
-//                 TODO do something with error!
-                await SpeckCore.shared.login(api.authorizationManager.accessToken!)
-                // TODO background thread updates ardgfr;dg[fd
-                DispatchQueue.main.async {
-                    self.player = Player(api: self.api)
+                do {
+                    self.isLoggingIn = true
+                    
+                    // TODO do something with error!
+                    try await SpeckCore.shared.login(api.authorizationManager.accessToken!)
+                    
+                    DispatchQueue.main.async {
+                        self.player = Player(api: self.api)
+                    }
                 }
+                catch {
+                    print("could not login to core: \(error)")
+                }
+                self.isLoggingIn = false
             }
         }
     }
