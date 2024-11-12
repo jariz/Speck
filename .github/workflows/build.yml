@@ -11,26 +11,15 @@ jobs:
     name: Build and analyse default scheme using xcodebuild command
     runs-on: macos-15
     
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: rustup toolchain install
-        # You may pin to the exact commit or the version.
-        # uses: dtolnay/rust-toolchain@1482605bfc5719782e1267fd0c0cc350fe7646b8
         uses: dtolnay/rust-toolchain@v1
         with:
-          # Rust toolchain specification -- see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification
           toolchain: stable
-          # # Comma-separated list of target triples to install for this toolchain
-          # targets: # optional
-          # # Alias for `targets`
-          # target: # optional
-          # Comma-separated list of components to be additionally installed
-          # components: # optional
+      - name: Cargo build
+        run: cargo build --release
       - name: Build
-        # working-directory: Speck/
-        env:
-          scheme: ${{ 'default' }}
         run: |
            xcodebuild clean build analyze -scheme Speck -project Speck/Speck.xcodeproj | xcpretty && exit ${PIPESTATUS[0]}
