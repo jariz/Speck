@@ -95,8 +95,7 @@ extension RustStr: ToRustStr {
     }
 }
 
-func optionalRustStrToRustStr<S: ToRustStr, T>(_ str: S?, _ withUnsafeRustStr: (RustStr) -> T) -> T
-{
+func optionalRustStrToRustStr<S: ToRustStr, T>(_ str: S?, _ withUnsafeRustStr: (RustStr) -> T) -> T {
     if let val = str {
         return val.toRustStr(withUnsafeRustStr)
     } else {
@@ -808,8 +807,7 @@ extension RustString: Vectorizable {
         }
     }
 
-    public static func vecOfSelfGet(vecPtr: UnsafeMutableRawPointer, index: UInt) -> RustStringRef?
-    {
+    public static func vecOfSelfGet(vecPtr: UnsafeMutableRawPointer, index: UInt) -> RustStringRef? {
         let pointer = __swift_bridge__$Vec_RustString$get(vecPtr, index)
         if pointer == nil {
             return nil
@@ -819,8 +817,7 @@ extension RustString: Vectorizable {
     }
 
     public static func vecOfSelfGetMut(vecPtr: UnsafeMutableRawPointer, index: UInt)
-        -> RustStringRefMut?
-    {
+        -> RustStringRefMut? {
         let pointer = __swift_bridge__$Vec_RustString$get_mut(vecPtr, index)
         if pointer == nil {
             return nil
@@ -867,14 +864,14 @@ extension RustResult {
         switch self {
         case .Ok(let ok):
             return ok
-        case .Err(_):
+        case .Err:
             return nil
         }
     }
 
     func err() -> E? {
         switch self {
-        case .Ok(_):
+        case .Ok:
             return nil
         case .Err(let err):
             return err

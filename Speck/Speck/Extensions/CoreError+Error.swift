@@ -6,5 +6,5 @@
 //
 
 extension CoreError: Error {
-    
+
 }

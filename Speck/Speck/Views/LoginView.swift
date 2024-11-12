@@ -27,9 +27,9 @@ struct LoginView: View {
                     Text("\(error.localizedDescription)")
                         .foregroundColor(.red)
                         .foregroundStyle(.secondary)
-                        
+
                 }.padding(.top, 10)
-                
+
                 Button(action: authenticate) {
                     Text("Retry")
                 }

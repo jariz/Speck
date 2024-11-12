@@ -12,9 +12,9 @@ import Combine
 struct ArtistView: View {
     @State var artist: Artist
     @ObservedObject var spotify = Spotify.shared
-    
-    @State private var artistInfoCancellable: AnyCancellable? = nil
-    
+
+    @State private var artistInfoCancellable: AnyCancellable?
+
     func fetchArtistInfo () {
         debugPrint(artist)
         artistInfoCancellable =  spotify.api.artist(artist.uri!)
@@ -25,9 +25,9 @@ struct ArtistView: View {
                 debugPrint(artist)
                 self.artist = artist
             })
-            
+
     }
-    
+
     var body: some View {
         Text(artist.name)
             .onAppear {

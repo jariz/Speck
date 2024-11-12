@@ -11,7 +11,7 @@ extension Lyrics {
         guard let trackId = track.id else {
             return nil
         }
-        
+
         return try await SpeckCore.shared.get_lyrics(trackId)
     }
 }

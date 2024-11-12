@@ -1,5 +1,5 @@
 //
-//  Navigator.swift
+//  NavigatorView.swift
 //  Speck
 //
 //  Created by Jari on 07/11/2024.
@@ -11,7 +11,7 @@ import SwiftUI
 
 struct NavigatorView: View {
     @EnvironmentObject var navigation: Navigation
-    
+
     @ViewBuilder
     var activeView: some View {
         if let last = navigation.path.last {
@@ -20,14 +20,14 @@ struct NavigatorView: View {
                 SavedTracksView()
             case .library:
                 Text("Library")
-            case .playlist(let playlist):
+            case let .playlist(playlist):
                 Text("Playlist \(playlist.name)")
-            case .artist(let artist):
+            case let .artist(artist):
                 ArtistView(artist: artist)
             }
         }
     }
-    
+
     var body: some View {
         activeView
             .toolbar {

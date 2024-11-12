@@ -27,9 +27,9 @@ final class Player: ObservableObject {
     @Published var positionMS: UInt32 = 0
     @Published var durationMS: UInt32 = 0
 
-    private var trackInfoCancellable: AnyCancellable? = nil
-    private var playStateCancellable: AnyCancellable? = nil
-    private var positionTimer: Timer? = nil
+    private var trackInfoCancellable: AnyCancellable?
+    private var playStateCancellable: AnyCancellable?
+    private var positionTimer: Timer?
 
     private var core: SpeckCore
     private var api: SpotifyAPI<AuthorizationCodeFlowPKCEManager>
@@ -56,7 +56,7 @@ final class Player: ObservableObject {
 
                 if state == .playing {
                     self.positionTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
-                        timer in
+                        _ in
                         // TODO why aren't we querying core????
                         self.positionMS += 1000
                     }
@@ -103,7 +103,7 @@ final class Player: ObservableObject {
                     case .VolumeChanged(volume: let volume):
                         print("NOTIMPL .VolumeChanged")
                     case .PositionCorrection(_, track_id: let trackId, position_ms: let positionMS):
-                        getTrackInfo(id: trackId.toString());
+                        getTrackInfo(id: trackId.toString())
                         self.positionMS = positionMS
                     case .Seeked(_, track_id: let trackId, position_ms: let positionMS):
                         getTrackInfo(id: trackId.toString())
@@ -125,9 +125,9 @@ final class Player: ObservableObject {
                     case .PlayRequestIdChanged(play_request_id: let play_request_id):
                         print("NOTIMPL .PlayRequestIdChanged")
                     }
-                    
+
                 }
-                
+
                 print(playState)
             }
         }

@@ -16,16 +16,16 @@ enum DetailPage: Hashable {
 
 class Navigation: ObservableObject {
     static let shared = Navigation()
-    
+
     init () {
         firstPage = path[0]
         $path
             .map { $0.first }
             .assign(to: &$firstPage)
     }
-    
+
     @Published var path: [DetailPage] = [.savedTracks]
-    
+
     @Published var firstPage: DetailPage? {
         didSet {
             DispatchQueue.main.async {
@@ -33,15 +33,15 @@ class Navigation: ObservableObject {
             }
         }
     }
-    
+
     func push(_ page: DetailPage) {
         path.append(page)
     }
-    
+
     func replace(_ page: DetailPage) {
         path = [page]
     }
-    
+
     func pop() {
         path.removeLast()
     }

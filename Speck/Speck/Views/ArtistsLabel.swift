@@ -24,7 +24,7 @@ struct ArtistsLabel: View {
                     Text(artist.name)
                 }
                 .buttonStyle(.plain)
-                
+
                 if artists?.last?.id != artist.id {
                     Text(", ")
                 }
@@ -36,7 +36,7 @@ struct ArtistsLabel: View {
 struct ArtistsLabel_Previews: PreviewProvider {
     static var previews: some View {
         ArtistsLabel(artists: [
-            Artist(name: "Moderat"), Artist(name: "Logic1000"), Artist(name: "Big Ever"),
+            Artist(name: "Moderat"), Artist(name: "Logic1000"), Artist(name: "Big Ever")
         ])
     }
 }

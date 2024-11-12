@@ -1,7 +1,7 @@
 use env_logger::Env;
 use librespot::core::spotify_id::{SpotifyId, SpotifyItemType};
 use librespot::metadata::lyrics::SyncType;
-use librespot::metadata::{Artist, Lyrics, Metadata};
+use librespot::metadata::{Artist, Lyrics, Metadata, Track};
 use librespot::playback::audio_backend;
 use librespot::playback::config::AudioFormat;
 use librespot::playback::player::{PlayerEvent, PlayerEventChannel};
@@ -362,18 +362,26 @@ impl SpeckCore {
             message: "Invalid track id".to_string(),
         })?;
 
+        let session = self.session.as_ref().ok_or(ffi::CoreError {
+            message: "No session active".to_string(),
+        })?;
         id.item_type = SpotifyItemType::Track;
         debug!("getting lyrics for track: {:?}", id);
-        let metadata = Lyrics::get(
-            self.session.as_ref().ok_or(ffi::CoreError {
-                message: "No session active".to_string(),
-            })?,
-            &id,
-        )
-        .await
-        .map_err(|err| ffi::CoreError {
-            message: format!("{:?}", err),
-        })?;
+        let track_metadata = Track::get(self.session.as_ref().unwrap(), &id)
+            .await
+            .map_err(|err| ffi::CoreError {
+                message: format!("{:?}", err),
+            })?;
+        if !track_metadata.has_lyrics {
+            return Err(ffi::CoreError {
+                message: "No lyrics available".to_string(),
+            });
+        }
+        let metadata = Lyrics::get(session, &id)
+            .await
+            .map_err(|err| ffi::CoreError {
+                message: format!("{:?}", err),
+            })?;
         debug!("got metadata: {:?}", metadata);
         let lyrics = metadata.lyrics;
         Ok(ffi::Lyrics {

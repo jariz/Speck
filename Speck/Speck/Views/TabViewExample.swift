@@ -7,16 +7,15 @@
 
 import SwiftUI
 
-
 struct TabViewExample: View {
     @State private var tabs: [TabItem] = [
         TabItem(title: "Tab 1"),
         TabItem(title: "Tab 2"),
         TabItem(title: "Tab 3")
     ]
-    
+
     @State private var selectedTab: TabItem?
-    
+
     var body: some View {
         VStack {
             // Tab Bar
@@ -30,9 +29,9 @@ struct TabViewExample: View {
                 }
             }
             .padding()
-            
+
             Divider()
-            
+
             // Content of the selected tab
             if let selectedTab = selectedTab {
                 Text("Content for \(selectedTab.title)")
@@ -46,7 +45,7 @@ struct TabViewExample: View {
             selectedTab = tabs.first
         }
     }
-    
+
     private func closeTab(_ tab: TabItem) {
         if let index = tabs.firstIndex(of: tab) {
             tabs.remove(at: index)
@@ -64,11 +63,11 @@ struct TabButton: View {
     var tab: TabItem
     @Binding var selectedTab: TabItem?
     var closeAction: (TabItem) -> Void
-    
+
     var body: some View {
         HStack {
             Text(tab.title)
-            
+
             Button(action: {
                 closeAction(tab)
             }) {
@@ -98,23 +97,22 @@ struct TabDropDelegate: DropDelegate {
 //        }
         return false
     }
-    
+
     let item: TabItem
     @Binding var currentTabs: [TabItem]
     @Binding var selectedTab: TabItem?
 
 }
 
-
 struct TabItem: Identifiable, Equatable {
     let id = UUID()       // Unique identifier for each tab
     var title: String     // Title of the tab
     var icon: String?     // Optional: SF Symbol icon for the tab
 //    var content: AnyView  // Content displayed when the tab is selected
-    
+
     // Optional: Add more properties as needed
     var isClosable: Bool = true  // Whether the tab can be closed or not
-    
+
     // Equatable conformance to compare tabs
     static func == (lhs: TabItem, rhs: TabItem) -> Bool {
         return lhs.id == rhs.id

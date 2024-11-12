@@ -6,21 +6,19 @@
 //
 
 import Combine
-import SwiftUI
 import Inject
 import SpotifyWebAPI
-
+import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var spotify = Spotify.shared
     @ObservedObject var navigation = Navigation.shared
-    
+
     var body: some View {
         HStack {
             NavigationSplitView {
                 SidebarView()
-            }
-            detail: {
+            } detail: {
                 NavigatorView()
             }
             .environmentObject(navigation)
@@ -29,22 +27,22 @@ struct ContentView: View {
                 content: {
                     LoginView()
                         .environmentObject(spotify)
-                })
+                }
+            )
             .enableInjection()
-            
             if let player = spotify.player {
                 LyricsView()
                     .environmentObject(player)
             }
         }
-        
+
         if let player = spotify.player {
             PlayerView()
                 .environmentObject(player)
                 .transition(.slide)
         }
     }
-    
+
     @ObserveInjection var inject
 }
 

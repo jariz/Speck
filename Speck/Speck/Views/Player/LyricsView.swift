@@ -7,13 +7,13 @@
 import SwiftUI
 
 struct LyricsView: View {
-    
+
     @State private var showRight = false
-    
+
     @EnvironmentObject var player: Player
-    
+
     @State var lyrics: Lyrics?
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
@@ -22,7 +22,7 @@ struct LyricsView: View {
                         Text(line.toString())
                             .font(.title2)
                             .bold()
-//                            .foregroundColor(Color(argb: lyrics?.color_text ?? 0))
+                        //                            .foregroundColor(Color(argb: lyrics?.color_text ?? 0))
                     }
                 }
             }
@@ -49,7 +49,7 @@ struct LyricsView: View {
                 }
             }
         }
-        .onChange(of: player.track) { oldValue, newValue in
+        .onChange(of: player.track) { _, newValue in
             if let track = newValue {
                 Task {
                     do {
@@ -63,7 +63,6 @@ struct LyricsView: View {
                 }
             }
         }
-        
-        
+
     }
 }

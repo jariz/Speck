@@ -17,7 +17,7 @@ struct SidebarPlaylistsView: View {
         Spotify.shared.api
             .currentUserPlaylists()
             .receive(on: RunLoop.main)
-            .sink { completion in
+            .sink { _ in
                 debugPrint("wtf")
             } receiveValue: { response in
                 playlists = response.items

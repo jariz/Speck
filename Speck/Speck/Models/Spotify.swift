@@ -40,30 +40,30 @@ let OAUTH_SCOPES = [
     "user-read-playback-state",
     "user-read-private",
     "user-read-recently-played",
-    "user-top-read",
+    "user-top-read"
 ]
 
 final class Spotify: ObservableObject {
     @Published var player: Player?
-    
+
 //    public var privateApis: PrivateApis;
-    
+
     static let shared = Spotify()
-    
+
     /// The key in the keychain that is used to store the authorization
     /// information: "authorizationManager".
     static let authorizationManagerKey = "authorizationManager"
-    
+
     /// The URL that Spotify will redirect to after the user either authorizes
     /// or denies authorization for your application.
     static let loginCallbackURL = URL(
         string: "http://127.0.0.1:\(OAUTH_PORT)/login"
     )!
-    
+
     var authorizationState = String.randomURLSafe(length: 128)
     var codeVerifier: String
     var codeChallenge: String
-    
+
     /**
      Whether or not the application has been authorized. If `true`, then you can
      begin making requests to the Spotify web API using the `api` property of
@@ -80,12 +80,12 @@ final class Spotify: ObservableObject {
      `SpotifyAPI.authorizationManager.deauthorize()` is called.
      */
     @Published var isAuthorized = false
-    
+
     @Published var isLoggingIn = false
-    
+
     /// The keychain to store the authorization information in.
     private let keychain = Keychain(service: "io.jari.Speck").accessibility(.whenUnlocked)
-    
+
     /// An instance of `SpotifyAPI` that you use to make requests to the Spotify
     /// web API.
     let api = SpotifyAPI(
@@ -93,14 +93,13 @@ final class Spotify: ObservableObject {
             clientId: OAUTH_CLIENT_ID
         )
     )
-    
-    var cancellables: [AnyCancellable] = []
 
+    var cancellables: [AnyCancellable] = []
 
     init() {
         self.codeVerifier = String.randomURLSafe(length: 128)
         self.codeChallenge = String.makeCodeChallenge(codeVerifier: codeVerifier)
-        
+
         // MARK: Important: Subscribe to `authorizationManagerDidChange` BEFORE
         // MARK: retrieving `authorizationManager` from persistent storage
         self.api.authorizationManagerDidChange
@@ -109,12 +108,12 @@ final class Spotify: ObservableObject {
             .receive(on: RunLoop.main)
             .sink(receiveValue: authorizationManagerDidChange)
             .store(in: &cancellables)
-        
+
         self.api.authorizationManagerDidDeauthorize
             .receive(on: RunLoop.main)
             .sink(receiveValue: authorizationManagerDidDeauthorize)
             .store(in: &cancellables)
-        
+
         // Check to see if the authorization information is saved in the
         // keychain.
         if let authManagerData = keychain[data: Self.authorizationManagerKey] {
@@ -124,7 +123,7 @@ final class Spotify: ObservableObject {
                     AuthorizationCodeFlowPKCEManager.self,
                     from: authManagerData
                 )
-                
+
                 /*
                  This assignment causes `authorizationManagerDidChange` to emit
                  a signal, meaning that `authorizationManagerDidChange()` will
@@ -140,16 +139,15 @@ final class Spotify: ObservableObject {
                  is already handled in `authorizationManagerDidChange()`.
                  */
                 self.api.authorizationManager = authorizationManager
-                
+
             } catch {
                 print("could not decode authorizationManager from data:\n\(error)")
             }
-        }
-        else {
+        } else {
             print("did not find authorization information in keychain")
         }
     }
-    
+
     func authorize() async throws {
         let authorizationURL = api.authorizationManager.makeAuthorizationURL(
             redirectURI: Self.loginCallbackURL,
@@ -157,11 +155,11 @@ final class Spotify: ObservableObject {
             state: self.authorizationState,
             scopes: Scope.makeSet(OAUTH_SCOPES.joined(separator: ","))
         )!
-        
+
         NSWorkspace.shared.open(authorizationURL)
-        
+
         let code = try await receiveAuthCode()
-        
+
         try await withCheckedThrowingContinuation { continuation in
             api.authorizationManager.requestAccessAndRefreshTokens(
                 redirectURIWithQuery: code,
@@ -182,7 +180,7 @@ final class Spotify: ObservableObject {
             .store(in: &cancellables)
         }
     }
-    
+
     /**
      Saves changes to `api.authorizationManager` to the keychain.
 
@@ -200,7 +198,7 @@ final class Spotify: ObservableObject {
             // manually refresh token if it's expired because our core needs a fresh one
             self.api.authorizationManager.refreshTokens(onlyIfExpired: true)
                 .receive(on: RunLoop.main)
-                .sink(receiveCompletion: { result in
+                .sink(receiveCompletion: { _ in
                     // todo do something with error
                     self.authorizationManagerDidChange()
                 })
@@ -209,41 +207,40 @@ final class Spotify: ObservableObject {
 
         // Update the @Published `isAuthorized` property.
         self.isAuthorized = !isExpired && self.api.authorizationManager.isAuthorized()
-        
+
         do {
             // Encode the authorization information to data.
             let authManagerData = try JSONEncoder().encode(self.api.authorizationManager)
-            
+
             // Save the data to the keychain.
             self.keychain[data: Self.authorizationManagerKey] = authManagerData
-            
+
         } catch {
             print(
                 "couldn't encode authorizationManager for storage in the " +
                 "keychain:\n\(error)"
             )
         }
-        
+
         if self.isAuthorized && !isExpired && self.player == nil && !self.isLoggingIn {
             Task {
                 do {
                     self.isLoggingIn = true
-                    
+
                     // TODO do something with error!
                     try await SpeckCore.shared.login(api.authorizationManager.accessToken!)
-                    
+
                     DispatchQueue.main.async {
                         self.player = Player(api: self.api)
                     }
-                }
-                catch {
+                } catch {
                     print("could not login to core: \(error)")
                 }
                 self.isLoggingIn = false
             }
         }
     }
-    
+
     /**
      Removes `api.authorizationManager` from the keychain.
      
@@ -251,12 +248,12 @@ final class Spotify: ObservableObject {
      called.
      */
     func authorizationManagerDidDeauthorize() {
-        
+
         self.isAuthorized = false
-        
+
         // TODO properly log out core?
         self.player = nil
-        
+
         do {
             /*
              Remove the authorization information from the keychain.
@@ -268,18 +265,18 @@ final class Spotify: ObservableObject {
              */
             try self.keychain.remove(Self.authorizationManagerKey)
             print("did remove authorization manager from keychain")
-            
+
         } catch {
             print(
                 "couldn't remove authorization manager from keychain: \(error)"
             )
         }
     }
-    
-    func receiveAuthCode() async throws -> URL  {
+
+    func receiveAuthCode() async throws -> URL {
         let app = try await Application.make()
         app.http.server.configuration.port = OAUTH_PORT
-        
+
         return try await withCheckedThrowingContinuation { continuation in
            app.get("login") { req -> Response in
                guard let query = req.url.query,
@@ -294,7 +291,7 @@ final class Spotify: ObservableObject {
 
                return Response(status: .ok, body: "You can cmd+tab back to Speck and close this window.")
            }
-           
+
             do {
                 try app.server.start()
             } catch {

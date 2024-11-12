@@ -54,7 +54,7 @@ struct NowPlaying_Previews: PreviewProvider {
                 artists: [
                     Artist(name: "Tyler, The Creator", id: "a"),
                     Artist(name: "Lil Uzi Vert", id: "b"),
-                    Artist(name: "Pharell Williams", id: "c"),
+                    Artist(name: "Pharell Williams", id: "c")
                 ], isLocal: false, isExplicit: true)
         )
     }

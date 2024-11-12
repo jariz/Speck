@@ -68,10 +68,50 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		497DBF4A2CCADD0E0034FA71 /* Util */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Util; sourceTree = "<group>"; };
-		497DBF552CCAF00E0034FA71 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
-		497DBF682CCAF0130034FA71 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
-		497DBF782CCAF0130034FA71 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
+		497DBF4A2CCADD0E0034FA71 /* Util */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		497DBF552CCAF00E0034FA71 /* Extensions */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		497DBF682CCAF0130034FA71 /* Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		497DBF782CCAF0130034FA71 /* Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,7 +234,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4901079D29F9C32200A6CB20 /* Build configuration list for PBXNativeTarget "Speck" */;
 			buildPhases = (
-				49B0B9992A005D1100404FF4 /* swift-format */,
 				490107A629F9C51800A6CB20 /* Build rust */,
 				4901077429F9C32100A6CB20 /* Sources */,
 				4901077529F9C32100A6CB20 /* Frameworks */,
@@ -352,24 +391,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./xcode-build-rust.sh\n";
-		};
-		49B0B9992A005D1100404FF4 /* swift-format */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "swift-format";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#/opt/homebrew/bin/swift-format -i -r ${PROJECT_DIR} --configuration swiftFormat.json\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

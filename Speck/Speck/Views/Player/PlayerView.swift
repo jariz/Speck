@@ -84,10 +84,10 @@ struct PlayerView: View {
                 Slider(value: positionMS, in: 0...Double(player.durationMS))
                     .frame(maxWidth: .infinity)
                     .offset(y: -12)
-                    
+
             }
         }
 
     }
 }
- 
+

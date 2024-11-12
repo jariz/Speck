@@ -13,7 +13,7 @@ struct SidebarView: View {
 
     var body: some View {
 
-        List (selection: $navigation.firstPage) {
+        List(selection: $navigation.firstPage) {
             NavigationLink(value: DetailPage.savedTracks) {
                 Label("Saved Tracks", systemImage: "music.note.list")
             }

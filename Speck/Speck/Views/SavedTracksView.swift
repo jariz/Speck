@@ -14,7 +14,7 @@ extension SavedTrack: Identifiable {
 }
 
 struct SavedTracksView: View {
-    @State private var searchCancellable: AnyCancellable? = nil
+    @State private var searchCancellable: AnyCancellable?
     @ObservedObject var spotify = Spotify.shared
 
     @State private var items: [SavedTrack] = []
@@ -34,7 +34,7 @@ struct SavedTracksView: View {
             // final page reached
             return
         }
-        
+
         searchCancellable = spotify.api.currentUserSavedTracks(
             limit: SavedTracksView.perPage, offset: currentPage * SavedTracksView.perPage
         )
@@ -63,7 +63,7 @@ struct SavedTracksView: View {
             }
             .width(32)
             TableColumn("Title") { track in
-                VStack (alignment: .leading) {
+                VStack(alignment: .leading) {
                     Text(track.item.name)
                     ArtistsLabel(artists: track.item.artists).foregroundColor(.secondary)
                 }
@@ -96,7 +96,7 @@ struct SavedTracksView: View {
                 fetchMore()
             }
         }
-        .onAppear() {
+        .onAppear {
             if spotify.isAuthorized {
                 fetchMore()
             }
