@@ -18,7 +18,7 @@ struct SidebarPlaylistsView: View {
             .currentUserPlaylists()
             .receive(on: RunLoop.main)
             .sink { _ in
-                debugPrint("wtf")
+                debugPrint("playlists retrieved")
             } receiveValue: { response in
                 playlists = response.items
             }
